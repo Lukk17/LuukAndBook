@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import pl.lukk.entity.Role;
 
 @Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, Integer>
+public interface RoleRepository extends JpaRepository<Role, Long>
 {
     Role findByName(String name);
 }

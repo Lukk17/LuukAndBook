@@ -15,5 +15,5 @@ import pl.lukk.entity.Offer;
 public interface AvailabilityRepository extends JpaRepository<Availability, Long>
 {
     @Query("select a.bookedDates from Availability a where offers=?1")
-    List<LocalDateTime> findBookedDatesByOffers(@Param("1")Offer offer); 
+    List<LocalDateTime> findBookedDatesByOffers(@Param("1") Offer offer);
 }

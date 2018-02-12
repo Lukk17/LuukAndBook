@@ -1,7 +1,6 @@
 package pl.lukk.service;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -29,25 +28,24 @@ public class UserServiceImpl implements UserService
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
-    
+
     @Override
     public Page<User> findAll(Pageable pageable)
     {
         return userRepository.findAll(pageable);
     }
-    
 
     @Override
     public User findByUserEmail(String email)
     {
-       
+
         return userRepository.findByEmail(email);
     }
-    
+
     @Override
     public User findByUserId(Long id)
     {
-       
+
         return userRepository.findById(id);
     }
 
@@ -55,33 +53,82 @@ public class UserServiceImpl implements UserService
     public void saveUser(User user)
     {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
+        user.setEnabled(true);
         Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(userRole);
+        user.setRoles(roleList);
+        //        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
 
     }
+
     @Override
-    public void saveEditUser(User user)
+    public void saveEditUser(User databaseUser, User userChanges)
     {
-        
-        userRepository.save(user);
+        if (userChanges.getName() != null)
+        {
+            databaseUser.setName(userChanges.getName());
+
+        }
+
+        if (userChanges.getSurname() != null)
+        {
+            databaseUser.setSurname(userChanges.getSurname());
+        }
+
+        if (userChanges.getEmail() != null)
+        {
+            databaseUser.setEmail(userChanges.getEmail());
+        }
+
+        if (userChanges.getId() != null)
+        {
+            databaseUser.setId(userChanges.getId());
+        }
+
+        if (userChanges.getOfferts() != null)
+        {
+            databaseUser.setOfferts(userChanges.getOfferts());
+        }
+
+        databaseUser.setEnabled(userChanges.getEnabled());
+
+        userRepository.save(databaseUser);
 
     }
+
+    @Override
+    public void roleChange(Long userId, List<Long> rolesId)
+    {
+        User databaseUser = userRepository.findOne(userId);
+        List<Role> roles = new ArrayList<>();
+
+        for (int i = 0; i < rolesId.size(); i++)
+        {
+            if (rolesId.get(i) != null)
+            {
+                roles.add(roleRepository.findOne(rolesId.get(i)));
+            }
+        }
+        databaseUser.setRoles(roles);
+        userRepository.save(databaseUser);
+    }
+
     @Override
     public boolean checkPassword(String newPassword, String password)
     {
-       return passwordEncoder.matches(newPassword, password);
-        
+        return passwordEncoder.matches(newPassword, password);
+
     }
-    
+
     @Override
     public void delete(Long id)
     {
-       
+
         userRepository.delete(userRepository.findById(id));
     }
-    
+
     @Override
     public List<User> findAll()
     {

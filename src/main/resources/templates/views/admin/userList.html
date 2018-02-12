@@ -5,7 +5,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
-<title>Insert title here</title>
+<title>Admin: user list</title>
 </head>
 <section layout:fragment="content">
 	<div class="x_panel">
@@ -17,24 +17,50 @@
 			<table id="datatable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th><a class="sorted" sd:pagination-sort="email"
-							th:text="#{email.text}"></a></th>
 						<th><a class="sorted" sd:pagination-sort="id"
 							th:text="#{id.text}"></a></th>
-						<th th:text="#{app.action.text}">Action</th>
+						<th><a class="sorted" sd:pagination-sort="email"
+							th:text="#{email.text}"></a></th>
+						<th><a class="sorted" sd:pagination-sort="name"
+							th:text="#{name.text}"></a></th>
+						<th><a class="sorted" sd:pagination-sort="surname"
+							th:text="#{surname.text}"></a></th>
+						<th><a class="sorted" sd:pagination-sort="enabled"
+							th:text="#{enabled.text}"></a></th>
+						<th th:text="#{roles.text}"></th>
+						<!-- <th th:text="#{offer.text}"></th> -->
+						<th th:text="#{action.text}">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${userList}">
-						<td th:text="${user.email}"></td>
 						<td th:text="${user.id}"></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.name}"></td>
+						<td th:text="${user.surname}"></td>
+						<td th:text="${user.enabled}"></td>
+						<td>
+							<div th:each="role : ${user.roles}">
+								<p th:text="${role.name}" />
+							</div>
+						</td>
+						<!-- <td>
+							<div th:each="offer : ${user.offers}">
+								<p th:text="${offer.id}" />
+							</div>
+						</td> -->
+
 						<td><a class="btn btn-primary btn-xs"
 							th:href="@{/admin/{id}/userEdit(id=${user.id})}"
-							th:text="#{edit.text}"> <i class="fa fa-folder"></i> Edit User
-						</a> 
-						<a class="btn btn-primary btn-xs" th:href="@{/admin/{id}/userRemove(id=${user.id})}" th:text="#{remove.text}" >
-						<i class="fa fa-folder"></i>
-								Remove User </a></td>
+							th:text="#{edit.text}"> <i class="fa fa-folder"></i> Edit
+								User
+						</a> <a class="btn btn-primary btn-xs"
+							th:href="@{/admin/{id}/userRemove(id=${user.id})}"
+							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
+								User
+						</a> <a class="btn btn-primary btn-xs" th:href="@{/admin/{id}/roleChange(id=${user.id})}"
+							th:text="#{role.edit.text}"> <i class="fa fa-folder"></i>Role edit</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

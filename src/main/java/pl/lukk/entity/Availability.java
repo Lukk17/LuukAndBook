@@ -22,7 +22,6 @@ public class Availability
 
     private LocalDateTime bookedDates;
 
-    
     public Long getId()
     {
         return id;
@@ -53,5 +52,4 @@ public class Availability
         this.bookedDates = bookedDates;
     }
 
-    
 }

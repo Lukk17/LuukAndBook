@@ -13,14 +13,13 @@ public class Template
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String Name;
-    
+
     private double value;
-    
+
     private Date date;
 
-    
     public Date getDate()
     {
         return date;

@@ -1,7 +1,6 @@
 package pl.lukk.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,12 +32,12 @@ public class User
     @NotBlank
     private String password;
 
-    private int enabled;
+    private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
     @NotBlank
     private String name;
@@ -46,8 +45,8 @@ public class User
     @NotBlank
     private String surname;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    List<Offer> offers;
+    @OneToMany
+    private List<Offer> offers;
 
     public Long getId()
     {
@@ -79,22 +78,22 @@ public class User
         this.password = password;
     }
 
-    public int getEnabled()
+    public boolean getEnabled()
     {
         return enabled;
     }
 
-    public void setEnabled(int enabled)
+    public void setEnabled(boolean enabled)
     {
         this.enabled = enabled;
     }
 
-    public Set<Role> getRoles()
+    public List<Role> getRoles()
     {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles)
+    public void setRoles(List<Role> roles)
     {
         this.roles = roles;
     }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<section layout:fragment="content">
+	<form th:action="@{/admin/roleChange}" th:object="${user}" method="post">
+	
+		<input type="checkbox" name="ROLE_USER" th:text="ROLE_USER" th:value="1" th:checked="checked" /> 
+		<input type="checkbox" name="ROLE_OWNER" th:text="ROLE_OWNER" th:value="2" /> 
+		<input type="checkbox" name="ROLE_ADMIN" th:text="ROLE_ADMIN" th:value="3" />
+		<input type="checkbox" name="ROLE_GROUP-MANAGER" th:text="ROLE_GROUP-MANAGER" th:value="4" />
+		<input type="hidden" th:field="*{id}" />
+
+		<div class="col-lg-offset-2 col-lg-10">
+			<button type="submit" class="btn btn-primary"
+				th:text="#{submit.text}">Submit</button>
+		</div>
+	</form>
+</section>
+</html>

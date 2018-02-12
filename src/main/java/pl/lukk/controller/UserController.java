@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.lukk.entity.User;
-import pl.lukk.repository.UserRepository;
 import pl.lukk.service.UserService;
 
 @Controller
@@ -36,17 +34,24 @@ public class UserController
     }
 
     @PostMapping("/add")
-    public String add(User user)
+    public String add(@Valid User user, BindingResult bresult)
     {
-        userService.saveUser(user);
-        return "redirect:/login";
+        if (bresult.hasErrors())
+        {
+            return "/views/user/add";
+        }
+        else
+        {
+            userService.saveUser(user);
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/edit")
     public String edit(Model model, Authentication auth)
     {
-        String name = auth.getName();
-        User user = userService.findByUserEmail(name);
+        String email = auth.getName();
+        User user = userService.findByUserEmail(email);
         model.addAttribute("user", user);
 
         return "views/user/edit";
@@ -55,25 +60,16 @@ public class UserController
     @PostMapping("/edit")
     public String edit(@Valid User formUser, BindingResult bresult, Authentication auth)
     {
-        String name = auth.getName();
-        User databaseUser = userService.findByUserEmail(name);
+        String email = auth.getName();
+        User databaseUser = userService.findByUserEmail(email);
 
         if (bresult.hasErrors() || !userService.checkPassword(formUser.getPassword(), databaseUser.getPassword()))
         {
-            return "views/user/edit";
+            return "user/edit";
         }
         else
         {
-            if (formUser.getName() != null)
-            {
-                databaseUser.setName(formUser.getName());
-            }
-            if (formUser.getSurname() != null)
-            {
-                databaseUser.setSurname(formUser.getSurname());
-            }
-
-            userService.saveEditUser(databaseUser);
+            userService.saveEditUser(databaseUser, formUser);
 
             return "redirect:index";
         }

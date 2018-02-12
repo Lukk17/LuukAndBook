@@ -6,8 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,51 +15,47 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity(name = "offer")
 public class Offer
 {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @NotBlank
+
     @ManyToOne
     @JoinColumn(name = "offer_owner")
-    private Owner owner;
-    
+    private User owner;
+
     @NotBlank
     @Size(max = 100)
     private String hotelName;
-    
+
     @NotBlank
     private String roomNumber;
-    
-    @NotBlank
+
+    @NotNull
     @Min(value = 1)
-    @Digits(integer = 1, fraction = 0)
     private Long roomCapacity;
-    
-    @NotBlank
+
+    @NotNull
     @Min(value = 1)
-    @Digits(integer = 1, fraction = 2)
     private Double price;
-    
+
     @Size(max = 3000)
     private String description;
-    
+
     private boolean promoted;
-    
+
     @ManyToOne
     @JoinColumn(name = "offer_user")
     private User user;
-    
+
     @Size(max = 500)
     private String comment;
-    
+
     @NotBlank
     private String country;
-    
+
     @NotBlank
     private String city;
-    
 
     public Long getId()
     {
@@ -71,12 +67,12 @@ public class Offer
         this.id = id;
     }
 
-    public Owner getOwner()
+    public User getOwner()
     {
         return owner;
     }
 
-    public void setOwner(Owner owner)
+    public void setOwner(User owner)
     {
         this.owner = owner;
     }
@@ -159,5 +155,25 @@ public class Offer
     public void setComment(String comment)
     {
         this.comment = comment;
+    }
+
+    public String getCountry()
+    {
+        return country;
+    }
+
+    public void setCountry(String country)
+    {
+        this.country = country;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
     }
 }

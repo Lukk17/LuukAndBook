@@ -19,9 +19,12 @@ public interface UserService
 
     boolean checkPassword(String newPassword, String password);
 
-    void saveEditUser(User user);
-
     User findByUserEmail(String email);
 
     Page<User> findAll(Pageable pageable);
+
+    void saveEditUser(User databaseUser, User userChanges);
+
+    void roleChange(Long userId, List<Long> rolesId);
+
 }

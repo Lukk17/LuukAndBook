@@ -8,5 +8,5 @@ import pl.lukk.entity.FAQ;
 @Repository
 public interface FAQRepository extends JpaRepository<FAQ, Long>
 {
-    
+
 }

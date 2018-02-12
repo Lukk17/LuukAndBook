@@ -17,20 +17,19 @@ public class FAQ
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @NotBlank
     @Size(max = 600)
     private String question;
-    
+
     @NotBlank
     private String answear;
-    
+
     @Min(value = 1)
     @Max(value = 10)
     @Digits(integer = 1, fraction = 2)
     private Double rating;
 
-    
     public Long getId()
     {
         return id;
