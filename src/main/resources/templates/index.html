@@ -8,6 +8,7 @@
 <title>Main Page</title>
 </head>
 <section layout:fragment="content">
+<div style="padding-left: 30%;">
 	Main page <br />
 	<p sec:authorize="isAuthenticated()"></p>
 	<p>
@@ -16,7 +17,7 @@
 	<p>
 		Role: <span sec:authentication="authorities"></span>
 	</p>
-	
+	</div>
 
 </section>
 </html>

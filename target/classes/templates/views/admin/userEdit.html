@@ -20,16 +20,16 @@
 	<form th:action="@{/admin/userEdit}" th:object="${user}" method="post" Style="padding-left: 30%;">
 	
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{email.text}">Email:</label>
+			<label class="col-sm-2 control-label" th:text="#{email.text}" style="font-weight: 700;">Email:</label>
 			<input type="text" class="form-control" th:field="*{email}" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{name.text}">Name:</label>
+			<label class="col-sm-2 control-label" th:text="#{name.text}" style="font-weight: 700;">Name:</label>
 			<input type="text" class="form-control" th:field="*{name}"
 				placeholder="Name" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{surname.text}">Surname:</label>
+			<label class="col-sm-2 control-label" th:text="#{surname.text}" style="font-weight: 700;">Surname:</label>
 			<input type="text" class="form-control" th:field="*{surname}"
 				placeholder="Surname" />
 		</div>
@@ -39,27 +39,12 @@
 				th:checked="*{enabled}" th:text="#{enabled.text}" />
 			</label>
 		</div>
-		<!-- <table>
-			<th:block th:each="role : ${roles}">
-				<tr th:each="userRole : ${user.roles}" th:if="${userRole==role}">
-					<td ><input type="checkbox" name="${role}" th:text="${role.name}"
-					th:value="${role}" th:if="${userRole==role}"
-					th:checked="${userRole}" /></td>
-					
-				</tr>
-				<tr th:each="role : ${roles}" th:unless="${userRole==role}">
-					<td><input type="checkbox" name="${role}" th:text="${role.name}"
-					th:value="${role}" /></td>
-				</tr>
-			</th:block>
-		</table> -->
-
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{password.text}">Password</label>
+			<label class="col-sm-2 control-label" th:text="#{password.text}" style="font-weight: 700;">Password</label>
 			<input type="password" class="form-control" th:field="*{password}" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{id.text}">ID</label>
+			<label class="col-sm-2 control-label" th:text="#{id.text}" style="font-weight: 700;">ID</label>
 			<input type="number" class="form-control" th:field="*{id}" disabled="disabled" />
 		</div>
 		<br />

@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService
 
     @Autowired
     StorageService storageService;
-    
+
     private final UserRepository        userRepository;
     private final RoleRepository        roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserService
         if (userChanges.getName() != null)
         {
             databaseUser.setName(userChanges.getName());
-
         }
 
         if (userChanges.getSurname() != null)
@@ -103,14 +102,14 @@ public class UserServiceImpl implements UserService
         userRepository.save(databaseUser);
 
     }
-    
+
     @Override
     public void savePhoto(String email, MultipartFile photo)
     {
         User user = userRepository.findByEmail(email);
         storageService.storeProfilePhoto(photo, user);
-        
-        String photoPath = ("../uploads/"+user.getEmail());
+
+        String photoPath = ("../uploads/" + user.getEmail());
         user.setPhotoPath(photoPath);
         userRepository.save(user);
     }

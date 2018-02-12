@@ -9,14 +9,15 @@
 <section layout:fragment="content">
 
 	<div>
-		<form method="POST" enctype="multipart/form-data" th:action="@{/offer/owner/addPhoto}">
+		<form method="POST" enctype="multipart/form-data" th:action="@{/offer/owner/addPhoto}" 
+		style="padding-left: 30%;padding-top: 7%;">
 			<table>
 				<tr>
-					<td th:text="#{photo.upload.text}" >Photo to upload:</td>
+					<td th:text="#{photo.upload.text}" style="font-weight: 700;" >Photo to upload:</td>
 					<td><input type="file" name="photo" /></td>
 				</tr>
 				<tr>
-					<td><div class="form-group">
+					<td><div class="form-group" style="padding-left: 30%;padding-top: 15%;">
 							<div class="col-lg-offset-2 col-lg-10">
 								<button type="submit" class="btn btn-primary"
 									th:text="#{submit.text}">Submit</button>

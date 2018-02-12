@@ -27,11 +27,18 @@ public class UserController
     @Autowired
     UserService userService;
 
+    @GetMapping
+    public String user(Authentication auth, Model model)
+    {
+        model.addAttribute("user", userService.findByUserEmail(auth.getName()));
+
+        return "views/user";
+    }
+    
     @GetMapping("/add")
     public String add(Model model)
     {
-        User user = new User();
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
 
         return "views/user/add";
     }
@@ -53,9 +60,7 @@ public class UserController
     @GetMapping("/edit")
     public String edit(Model model, Authentication auth)
     {
-        String email = auth.getName();
-        User user = userService.findByUserEmail(email);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.findByUserEmail(auth.getName()));
 
         return "views/user/edit";
     }
@@ -74,7 +79,7 @@ public class UserController
         {
             userService.saveEditUser(databaseUser, formUser);
 
-            return "redirect:index";
+            return "redirect:/user";
         }
     }
 
@@ -100,21 +105,6 @@ public class UserController
         return "redirect:/user";
     }
 
-    @GetMapping("/add30")
-    @ResponseBody
-    public String add30()
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            User user = new User();
-            user.setEmail("name" + i + "@mail.com");
-            user.setName("name" + 1);
-            user.setSurname("surname" + i);
-            userService.saveUser(user);
-        }
-        return "added30";
-    }
-    
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
