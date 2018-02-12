@@ -71,7 +71,7 @@ public class OfferController
         Offer offer = offerService.findByUserAndId(owner, id);
         model.addAttribute("offer", offer);
 
-        return "views/offer/owner/edit";
+        return "views/offer/edit";
     }
 
     @PostMapping("/owner/edit")
@@ -79,7 +79,7 @@ public class OfferController
     {
         if (bresult.hasErrors())
         {
-            return "offer/owner/edit";
+            return "offer/edit";
         }
         else
         {

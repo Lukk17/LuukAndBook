@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>Your offers list</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2 th:text="#{offer.list.text}"></h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table id="datatable" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+								<th
+							th:text="#{hotelName.text}"></th>
+						<th
+							th:text="#{roomNumber.text}"></th>
+						<th
+							th:text="#{price.text}"></th>
+						<th
+							th:text="#{rentingUser.text}"></th>
+						<th th:text="#{details.text}">Details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="offer : ${offerList}">
+							<td th:text="${offer.hotelName}"></td>
+							<td th:text="${offer.roomNumber}"></td>
+							<td th:text="${offer.price}"></td>
+							<td th:text="${offer.user}"></td>
+	
+							<td><a class="btn btn-primary btn-xs"
+								th:href="@{/offer/owner/{id}/details(id=${offer.id})}"
+								th:text="#{details.text}"> <i class="fa fa-folder"></i>
+									Details
+							</a>
+							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/remove(id=${offer.id})}" th:text="#{remove.text}">Remove offer</a>
+							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/edit(id=${offer.id})}" th:text="#{edit.text}">Edit offer</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</section>
+</body>
+</html>

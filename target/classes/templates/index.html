@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>Main Page</title>
+</head>
+<section layout:fragment="content">
+	Main page <br />
+	<p sec:authorize="isAuthenticated()"></p>
+	<p>
+		Logged as: <span sec:authentication="name"></span>
+	</p>
+	<p>
+		Role: <span sec:authentication="authorities"></span>
+	</p>
+	
+
+</section>
+</html>

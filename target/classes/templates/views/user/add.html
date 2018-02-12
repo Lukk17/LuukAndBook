@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Add user</title>
+
+<!-- bootstrap theme -->
+  <link href="../cssLogin/bootstrap-theme.css" rel="stylesheet"/>
+  <!-- font icon -->
+  <link href="../cssLogin/elegant-icons-style.css" rel="stylesheet" />
+  <!-- Custom styles -->
+  <link href="../cssLogin/style.css" rel="stylesheet"/>
+</head>
+<body class="login-img3-body">
+<h1 class="login-wrap" >Register</h1>
+  <div class="container">
+
+    <form class="login-form" th:action="@{/user/add}" th:object="${user}" method="post">
+    
+      <div class="login-wrap">
+        
+        <div class="input-group">
+          <label class="col-sm-2 control-label">Email:</label>
+          <input type="email" class="form-control" th:field="*{email}" placeholder="Email" autofocus="autofocus" />
+        </div>
+        <div class="input-group">
+          <label class="col-sm-2 control-label">Name:</label>
+          <input type="text" class="form-control" th:field="*{name}" placeholder="Name" />
+        </div>
+        <div class="input-group">
+          <label class="col-sm-2 control-label">Surname:</label>
+          <input type="text" class="form-control" th:field="*{surname}" placeholder="Surname" />
+        </div>
+        <div class="input-group">
+          <label class="col-sm-2 control-label">Password:</label>
+          <input type="password" class="form-control" th:field="*{password}" placeholder="Password"  />
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
+      </div>
+    </form>
+    
+  </div>
+
+
+</body>
+</html>

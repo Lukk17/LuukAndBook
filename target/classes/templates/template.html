@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title>Template</title>
+</head>
+<section layout:fragment="content">
+
+	<h1 th:text="${message}"></h1>
+	<p th:text="|temp name: ${tmp.name}|">Name</p>
+	<br />
+
+	<!-- WITH #  def in language translation file  -->
+	<p th:text="#{app.name}">App name</p>
+	<p th:text="#{hello.message(${tmp.name})}">Welcome</p>
+	<br />
+
+	<!-- WITH @ Links: -->
+	<a th:href="@{/index}" th:text="#{url.index.text}">Main page</a>
+	<!-- Links with parameter (here /panel?name=tmpName): -->
+	<a th:href="@{/panel(name=${tmp.name})}">Panel</a>
+	<!-- Links with parameter (here /panel/name/tmp): -->
+	<a th:href="@{/panel/{name}/tmp(name=${tmp.name})}">Panel</a> <br />
+	<!-- Images: -->
+	<img th:src="@{/img/tomorrowland.jpg}" /> <br />
+	<!-- Objects: -->
+
+	<div th:object="${tmp}">
+		<p th:text="*{name}">Person firstName</p>
+	</div>
+	<br />
+	<!-- forEach -->
+	<table>
+		<tr>
+			<th>L.P.</th>
+			<th>description</th>
+			<th>price</th>
+			<th>availabeFrom</th>
+		</tr>
+		<!-- if interstat (count) is odd, css class will be added to this iteration -->
+		<tr th:each="temp, iterStat: ${tmpList}"
+			th:class="${iterStat.odd}? 'odd'">
+			<td th:text="${temp.name}" th:if="${tmp.value} &lt;= 40">name</td>
+			<td th:text="${temp.name}" th:if="${tmp.value} &gt;= 5">name</td>
+			<td
+				th:text="|temp value with precision: ${#numbers.formatDecimal(temp.value, 0, 4, 'COMMA')}"></td>
+		</tr>
+	</table>
+	<br />
+	<!-- Forms: -->
+	<form th:action="@{/template}" th:object="${template}" method="post">
+		<p>
+			name: <input type="text" th:field="*{name}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+	<br />
+
+	<!-- Logout: -->
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	<br />
+
+	<!-- show only if user is logged -->
+	<span sec:authorize="isAuthenticated()"> <a th:href="@{/logout}">logout</a>
+	</span> <br />
+
+	<!-- show only for admins -->
+	<p sec:authorize="hasRole('ROLE_ADMIN')">
+		<a th:href="@{/logout}">Logout</a> I'm Admin
+	</p>
+	<br />
+	<!-- show only for user who can enter given url: -->
+	<p sec:authorize-url="/admin/">
+		for people who can enter this page <a th:href="@{/logout}">Logout</a>
+	</p>
+
+	<br />
+
+	<!-- get info about logged user: -->
+	<p sec:authorize="isAuthenticated()"></p>
+	<p>
+		Logged as: <span sec:authentication="name"></span>
+	</p>
+	<p>
+		Role: <span sec:authentication="authorities"></span>
+	</p>
+	<br />
+
+	<!-- including other htmls: -->
+	<footer th:include="fragments/footer :: pagefooter"></footer>
+
+</section>
+</html>
