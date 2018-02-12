@@ -1,8 +1,10 @@
 package pl.lukk.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,43 +119,35 @@ public class OfferController
             offers = new ArrayList<>();
             model.addAttribute("offerList", offers);
         }
-
         return "views/offer/ownerOffersList";
     }
 
     @GetMapping("/owner/{id}/addPhoto")
-    public String addPhoto(Model model, @PathVariable(value = "id") Long offerId, Authentication auth)
+    public String addPhoto(Model model, @PathVariable(value = "id") Long offerId, HttpSession ses)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
-        //  offer from path must be own by user who want add photo:
-        Offer offer = offerService.findByUserAndId(owner, offerId);
-        model.addAttribute("offer", offer);
+        ses.setAttribute("offerId", offerId);
         return "views/offer/addPhoto";
     }
 
     @PostMapping("/owner/addPhoto")
-    public String addPhoto(@Valid Offer formOffer, BindingResult bresult, @RequestParam("photo") MultipartFile photo,
-            RedirectAttributes redirectAttributes, Authentication auth)
+    public String addPhoto(@RequestParam("photo") MultipartFile photo, RedirectAttributes redirectAttributes,
+            Authentication auth, HttpSession ses)
     {
-        if (bresult.hasErrors() || photo == null)
-        {
-            return "offer/owner/addPhoto";
-        }
-        else
-        {
             String email = auth.getName();
             User owner = userService.findByUserEmail(email);
+            Long offerId = (Long) ses.getAttribute("offerId");
 
             storageService.store(photo);
 
-            offerService.addPhoto(formOffer, owner, photo.getOriginalFilename());
+            offerService.addPhoto(offerId, owner, photo.getOriginalFilename());
 
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded " + photo.getOriginalFilename() + "!");
-
-            return "redirect:/offer/ownerList";
-        }
+            
+            ses.removeAttribute("offerId");
+            
+            return "redirect:/offer/owner/list";
+        
     }
 
     @GetMapping("/owner/{id}/details")
@@ -229,4 +224,11 @@ public class OfferController
     //
     //        return "views/offer/details";
     //    }
+    
+    @ModelAttribute
+    public void addAttributes(Model model, Authentication auth)
+    {
+        User logedUser = userService.findByUserEmail(auth.getName());
+        model.addAttribute("logedUser", logedUser );
+    }
 }

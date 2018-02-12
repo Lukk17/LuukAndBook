@@ -4,15 +4,16 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8" />
-<title>Add photo</title>
+<title>Change photo</title>
 </head>
 <section layout:fragment="content">
 
 	<div>
-		<form method="POST" enctype="multipart/form-data" th:action="@{/offer/owner/addPhoto}">
+		<form method="POST" enctype="multipart/form-data"
+			th:action="@{/user/changePhoto}">
 			<table>
 				<tr>
-					<td th:text="#{photo.upload.text}" >Photo to upload:</td>
+					<td th:text="#{photo.upload.text}">Photo to upload:</td>
 					<td><input type="file" name="photo" /></td>
 				</tr>
 				<tr>

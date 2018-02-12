@@ -19,6 +19,6 @@ public interface OfferService
 
     void deleteOffer(Long offerId, User owner);
 
-    void addPhoto(Offer offer, User owner, String photoFilename);
+    void addPhoto(Long offerId, User owner, String photoFilename);
 
 }

@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import pl.lukk.entity.User;
 import pl.lukk.service.UserService;
@@ -81,6 +84,21 @@ public class UserController
         model.addAttribute("page", userService.findAll(pageable));
         return "views/user/list";
     }
+    
+    @GetMapping("/changePhoto")
+    public String photoChange()
+    {
+        return "views/user/changePhoto";
+    }
+    
+    @PostMapping("/changePhoto")
+    public String photoChange(@RequestParam("photo") MultipartFile photo, 
+             Authentication auth)
+    {
+        userService.savePhoto(auth.getName(),photo);
+        
+        return "redirect:/user";
+    }
 
     @GetMapping("/add30")
     @ResponseBody
@@ -95,5 +113,12 @@ public class UserController
             userService.saveUser(user);
         }
         return "added30";
+    }
+    
+    @ModelAttribute
+    public void addAttributes(Model model, Authentication auth)
+    {
+        User logedUser = userService.findByUserEmail(auth.getName());
+        model.addAttribute("logedUser", logedUser );
     }
 }

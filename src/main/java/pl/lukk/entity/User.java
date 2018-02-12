@@ -33,6 +33,8 @@ public class User
     private String password;
 
     private boolean enabled;
+    
+    private String photoPath;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
@@ -47,6 +49,28 @@ public class User
 
     @OneToMany
     private List<Offer> offers;
+
+    
+    
+    public String getPhotoPath()
+    {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath)
+    {
+        this.photoPath = photoPath;
+    }
+
+    public List<Offer> getOffers()
+    {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers)
+    {
+        this.offers = offers;
+    }
 
     public Long getId()
     {

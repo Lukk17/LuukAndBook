@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import pl.lukk.StorageProperties;
+import pl.lukk.entity.User;
 import pl.lukk.exception.StorageException;
 import pl.lukk.exception.StorageFileNotFoundException;
 
@@ -53,6 +53,7 @@ public class StorageServiceImpl implements StorageService
         {
             if (file.isEmpty())
             {
+                
                 throw new StorageException("Failed to store empty file " + filename);
             }
             if (filename.contains(".."))
@@ -60,7 +61,32 @@ public class StorageServiceImpl implements StorageService
                 // This is a security check
                 throw new StorageException("Cannot store file with relative path outside current directory " + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.COPY_ATTRIBUTES);
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (IOException e)
+        {
+            throw new StorageException("Failed to store file " + filename, e);
+        }
+
+    }
+    
+    @Override
+    public void storeProfilePhoto(MultipartFile file, User user)
+    {
+        String filename = user.getEmail();
+        try
+        {
+            if (file.isEmpty())
+            {
+                
+                throw new StorageException("Failed to store empty file " + filename);
+            }
+            if (filename.contains(".."))
+            {
+                // This is a security check
+                throw new StorageException("Cannot store file with relative path outside current directory " + filename);
+            }
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException e)
         {

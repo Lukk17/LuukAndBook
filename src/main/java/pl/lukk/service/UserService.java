@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import pl.lukk.entity.User;
 
@@ -26,5 +27,7 @@ public interface UserService
     void saveEditUser(User databaseUser, User userChanges);
 
     void roleChange(Long userId, List<Long> rolesId);
+
+    void savePhoto(String email, MultipartFile photo);
 
 }

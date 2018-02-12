@@ -1,11 +1,20 @@
 package pl.lukk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pl.lukk.entity.User;
+import pl.lukk.service.StorageService;
 import pl.lukk.service.UserService;
 
 @Controller
@@ -14,17 +23,8 @@ public class HomeController
     @Autowired
     UserService userService;
 
-    //    @GetMapping("/add-user")
-    //    @ResponseBody
-    //    public String addUser()
-    //    {
-    //        User u = new User();
-    //        u.setEmail("admin@admin");
-    //        u.setPassword("admin");
-    //        userService.saveUser(u);
-    //
-    //        return "add-user";
-    //    }
+    @Autowired
+    StorageService storageService;
 
     @GetMapping("/403")
     public String permissionError()
@@ -46,8 +46,12 @@ public class HomeController
     }
 
     @GetMapping("/user")
-    public String user()
+    public String user(Authentication auth, Model model)
     {
+        String email = auth.getName();
+        User user = userService.findByUserEmail(email);
+        model.addAttribute("user", user);
+
         return "views/user";
     }
 
@@ -68,6 +72,13 @@ public class HomeController
     public String form()
     {
         return "form-template";
+    }
+
+    @ModelAttribute
+    public void addAttributes(Model model, Authentication auth)
+    {
+        User logedUser = userService.findByUserEmail(auth.getName());
+        model.addAttribute("logedUser", logedUser );
     }
 
 }

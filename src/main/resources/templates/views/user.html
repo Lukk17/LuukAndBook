@@ -2,10 +2,35 @@
 <html xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 	layout:decorator="layout">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>User</title>
 </head>
 <section layout:fragment="content">
-User
+	<div Style="padding: 0% 30% 0% 30%;">
+		<div>
+			<label th:text="#{email.text}">Email:</label>
+			<p class="form-control" th:text="${user.email}" />
+		</div>
+		<div>
+			<label th:text="#{name.text}">Name:</label>
+			<p class="form-control" th:text="${user.name}" />
+		</div>
+		<div>
+			<label th:text="#{surname.text}">Surname:</label>
+			<p class="form-control" th:text="${user.surname}" />
+		</div>
+
+		<div style="padding: 0% 30% 0% 30%;">
+			<label style="margin: 15% 0% 10% 30%; font-weight: 700;" th:text="#{profile.photo.text}">Profile photo:</label> 
+			<img style="height: 200px; width: 200px;"
+				th:src="@{|~/${user.photoPath}|}" /> 
+				<br /> 
+				<br /> 
+				<a class="btn btn-primary btn-xs" style="margin: 0% 40% 0% 40%;"
+				th:href="@{/user/changePhoto}" th:text="#{change.photo.text}"> <i
+				class="fa fa-folder"></i> Change photo
+			</a>
+		</div>
+	</div>
 </section>
 </html>

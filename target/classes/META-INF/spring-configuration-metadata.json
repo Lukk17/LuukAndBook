@@ -1,0 +1,18 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "pl.lukk.StorageProperties",
+      "name": "storage",
+      "type": "pl.lukk.StorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "pl.lukk.StorageProperties",
+      "name": "storage.location",
+      "description": "Folder location for storing files",
+      "type": "java.lang.String"
+    }
+  ]
+}

@@ -4,30 +4,27 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8" />
-<title>Insert title here</title>
+<title>Add photo</title>
 </head>
 <section layout:fragment="content">
 
 	<div>
-		<form method="POST" enctype="multipart/form-data" th:object="${offer}" th:action="@{/offer/addPhoto}">
+		<form method="POST" enctype="multipart/form-data" th:action="@{/offer/owner/addPhoto}">
 			<table>
 				<tr>
-					<td>File to upload:</td>
+					<td th:text="#{photo.upload.text}" >Photo to upload:</td>
 					<td><input type="file" name="photo" /></td>
 				</tr>
 				<tr>
-					<td></td>
-					<td><input type="submit" value="Upload" /></td>
+					<td><div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-primary"
+									th:text="#{submit.text}">Submit</button>
+							</div>
+						</div></td>
 				</tr>
 			</table>
 		</form>
-	</div>
-
-	<div>
-		<ul>
-			<li th:each="file : ${files}"><a th:href="${file}"
-				th:text="${file}" /></li>
-		</ul>
 	</div>
 </section>
 </html>

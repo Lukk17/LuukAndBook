@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,6 +91,13 @@ public class AdminController
         userService.roleChange(userId, rolesId);
 
         return "redirect:/admin/userList";
+    }
+    
+    @ModelAttribute
+    public void addAttributes(Model model, Authentication auth)
+    {
+        User logedUser = userService.findByUserEmail(auth.getName());
+        model.addAttribute("logedUser", logedUser );
     }
 
 }

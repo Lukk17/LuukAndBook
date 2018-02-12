@@ -26,27 +26,27 @@ public class OfferServiceImpl implements OfferService
     }
     
     @Override
-    public void addPhoto(Offer offer, User owner, String photoFilename)
+    public void addPhoto(Long offerId, User owner, String photoFilename)
     {
-        String photoPath = ("src/main/resources/static/uploads/"+photoFilename);
+        String photoPath = ("../uploads/"+photoFilename);
     //  offer from path must be own by user who want add photo:
-        Offer databaseOffer = offerRepo.findByOwnerAndId(owner, offer.getId());
+        Offer databaseOffer = offerRepo.findByOwnerAndId(owner, offerId);
         
         
-        if(databaseOffer.getPhotoPaths()!=null)
+        try
         {
             List<String> photoPaths = databaseOffer.getPhotoPaths();
             photoPaths.add(photoPath);
-            offer.setPhotoPaths(photoPaths);
+            databaseOffer.setPhotoPaths(photoPaths);
         }
-        else
+        catch (NullPointerException e)
         {
             List<String> photoPaths = new ArrayList<>();
             photoPaths.add(photoPath);
-            offer.setPhotoPaths(photoPaths);
+            databaseOffer.setPhotoPaths(photoPaths);
         }
                 
-        offerRepo.save(offer);
+        offerRepo.save(databaseOffer);
     }
 
     @Override

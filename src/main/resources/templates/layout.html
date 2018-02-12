@@ -47,7 +47,9 @@
 
 
 			<!--LOGO start-->
-			<a href="index.html" class="logo">Luuk  <span class="lite">&amp;</span> book</a>
+			<a href="index.html" class="logo">Luuk <span class="lite">&amp;</span>
+				book
+			</a>
 			<!--LOGO end-->
 
 			<!-- 
@@ -89,13 +91,6 @@
 			<div sec:authorize="hasRole('ROLE_ANONYMOUS')"
 				class="top-nav notification-row">
 				<a th:href="@{/login}" th:text="Login" class="logo"> </a>
-			</div>
-			<div sec:authorize="hasRole('ROLE_USER')"
-				class="top-nav notification-row">
-				<form th:action="@{/logout}" method="post">
-					<input type="submit" class="btn btn-primary btn-lg btn-block"
-						th:value="#{logout.text}" style="padding: 10px" />
-				</form>
 			</div>
 
 			<!-- NOTIFICATION dropdown start-->
@@ -314,26 +309,25 @@
 
 						<li class="dropdown"><a data-toggle="dropdown"
 							class="dropdown-toggle" href="#"> <span class="profile-ava">
-									<img alt="" src="img/avatar1_small.jpg"
-									th:src="@{/img/avatar1_small.jpg}" />
+									<img style="height: 40px; width: 40px;" alt="profile.photo.text" src="img/avatar1_small.jpg"
+									th:src="@{|~/${logedUser.photoPath}|}" /> 
 							</span> <span class="username" sec:authentication="name">username</span>
 								<b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu extended logout">
 								<li class="eborder-top"><a th:href="@{/user}"
-									th:text="#{profile.text}"><i class="icon_profile"></i> My
-										Profile</a></li>
+									 >
+										<i class="icon_profile"></i><span th:text="#{profile.text}"> My Profile</span>
+								</a></li>
 								<li><a href="#"><i class="icon_mail_alt"></i> My Inbox</a></li>
 								<li><a href="#"><i class="icon_clock_alt"></i> Timeline</a>
 								</li>
-								<li><a th:href="@{/user/edit}" th:text="#{edit.text}"><i
-										class="icon_chat_alt"></i> Chats</a></li>
-								<li><a href="login.html"><i class="icon_key_alt"></i>
-										Log Out</a></li>
-								<li><a href="documentation.html"><i
-										class="icon_key_alt"></i> Documentation</a></li>
-								<li><a href="documentation.html"><i
-										class="icon_key_alt"></i> Documentation</a></li>
+								<li><a th:href="@{/user/edit}" ><i
+										class="icon_key_alt"></i> 
+										<span th:text="#{profile.edit.text}"> Edit Profile</span></a></li>
+								
+								<li><a th:href="@{/logout}" ><i class="icon_genius" ></i>
+										<span th:text="#{logout.text}">Log Out</span></a></li>
 							</ul></li>
 						<!-- USER LOGIN dropdown end -->
 
@@ -382,7 +376,7 @@
 		<!--SIDEBAR start-->
 
 		<aside>
-			<div id="sidebar" class="nav-collapse ">
+			<div id="sidebar" class="nav-collapse " Style="width:15%">
 
 				<!-- 
           |
@@ -412,13 +406,13 @@
 				<!-- MAIN PAGE start -->
 
 				<ul class="sidebar-menu">
-					<li class="active"><a class="" th:href="@{/}"
-						> <i class="icon_house_alt"></i> <span th:text="#{mainPage.text}">Main
+					<li class="active"><a class="" th:href="@{/}"> <i
+							class="icon_house_alt"></i> <span th:text="#{mainPage.text}">Main
 								Page</span>
 					</a></li>
 
 					<!-- MAIN PAGE end -->
-					
+
 					<!-- 
           |
           |
@@ -431,8 +425,8 @@
           | -->
 
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a class=""
-						href="/admin/panel" th:href="@{/admin/panel}"
-						> <i class="icon_genius"></i> <span th:text="#{admin.panel.text}">Admin
+						href="/admin/panel" th:href="@{/admin/panel}"> <i
+							class="icon_genius"></i> <span th:text="#{admin.panel.text}">Admin
 								Panel</span>
 
 					</a></li>
@@ -449,30 +443,38 @@
           | -->
 
 					<!-- FORMS start -->
-					
+
 					<!-- FORMS FOR OWNERS -->
-					
-					<li class="sub-menu" sec:authorize="hasRole('ROLE_OWNER')" ><a href="javascript:;" class=""> <i
-							class="icon_document_alt"></i> <span th:text="#{offer.text}">Offer</span> <span
+
+					<li class="sub-menu" sec:authorize="hasRole('ROLE_OWNER')"><a
+						href="javascript:;" class=""> <i class="icon_document_alt"></i>
+							<span th:text="#{offer.text}">Offer</span> <span
 							class="menu-arrow arrow_carrot-right"></span>
 					</a>
 						<ul class="sub">
-							<li><a class="" th:href="@{/offer/owner/add}" href="/offer/add" th:text="#{offer.add.text}">Add offer</a></li>
-							<li><a class="" th:href="@{/offer/owner/list}" href="/offer/owner/list" th:text="#{offer.owner.list.text}">Offers
+							<li><a class="" th:href="@{/offer/owner/add}"
+								href="/offer/add" th:text="#{offer.add.text}">Add offer</a></li>
+							<li><a class="" th:href="@{/offer/owner/list}"
+								href="/offer/owner/list" th:text="#{offer.owner.list.text}">Offers
 									list</a></li>
 						</ul></li>
 
 					<!-- FORMS FOR USERS -->
-					
-					<li class="sub-menu" sec:authorize="hasRole('ROLE_USER')" ><a href="javascript:;" class=""> <i
-							class="icon_document_alt"></i> <span th:text="#{offer.text}">Offer</span> <span
+
+					<li class="sub-menu" sec:authorize="hasRole('ROLE_USER')"><a
+						href="javascript:;" class=""> <i class="icon_document_alt"></i>
+							<span th:text="#{offer.text}">Offer</span> <span
 							class="menu-arrow arrow_carrot-right"></span>
 					</a>
 						<ul class="sub">
-							<li><a class="" th:href="@{/offer/userOffers}" href="f/offer/search" th:text="#{offert.search.text}">Offer search</a></li>
-							<li><a class="" th:href="@{/offer/userOffers}" href="/offer/userOffers" th:text="#{offer.user.list.text}"> User reservations</a></li>
+							<li><a class="" th:href="@{/offer/userOffers}"
+								href="f/offer/search" th:text="#{offert.search.text}">Offer
+									search</a></li>
+							<li><a class="" th:href="@{/offer/userOffers}"
+								href="/offer/userOffers" th:text="#{offer.user.list.text}">
+									User reservations</a></li>
 						</ul></li>
-					
+
 					<!-- FORMS end -->
 
 					<!-- 

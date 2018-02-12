@@ -62,8 +62,8 @@
 			
 		</div>
 	</div>
-	<div th:each="photoPath : ${offer.photoPaths}">
-	<img th:src="${photoPath}" /> <br />
+	<div th:each="photoPath : ${offer.photoPaths}" >
+	<img th:src="@{|~/${photoPath}|}" /> <br />
 	</div>	
 				
 </section>
