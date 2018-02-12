@@ -11,7 +11,7 @@ import pl.lukk.entity.User;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long>
 {
-    Offer findByUserAndId(User owner, Long id);
+    Offer findByOwnerAndId(User owner, Long id);
 
-    List<Offer> findByUserId(Long Id);
+    List<Offer> findByOwnerId(Long Id);
 }

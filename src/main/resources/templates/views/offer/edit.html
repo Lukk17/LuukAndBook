@@ -7,41 +7,37 @@
 <title>Edit offer</title>
 </head>
 <section layout:fragment="content">
-<form th:action="@{/offer/edit}" th:object="${offer}" method="post">
+<form th:action="@{/offer/edit}" th:object="${offer}" method="post" style="padding-left: 30%;">
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{hotelName.text}">Hotel:</label>
+			<label style="font-weight: 700;" th:text="#{hotelName.text}">Hotel:</label>
 			<input type="text" class="form-control" th:field="*{hotelName}" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{country.text}">Country:</label>
+			<label style="font-weight: 700;" th:text="#{country.text}">Country:</label>
 			<input type="text" class="form-control" th:field="*{country}" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{city.text}">City:</label>
+			<label style="font-weight: 700;" th:text="#{city.text}">City:</label>
 			<input type="text" class="form-control" th:field="*{city}" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{hotelName.text}">Hotel:</label>
-			<input type="text" class="form-control" th:field="*{hotelName}" />
-		</div>
-		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{roomNumber.text}">Room number:</label>
+			<label style="font-weight: 700;" th:text="#{roomNumber.text}">Room number:</label>
 			<input type="text" class="form-control" th:field="*{roomNumber}"
 				placeholder="Name" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{roomCapacity.text}">Room capacity:</label>
+			<label style="font-weight: 700;" th:text="#{roomCapacity.text}">Room capacity:</label>
 			<input type="text" class="form-control" th:field="*{roomCapacity}"
 				placeholder="Surname" />
 		
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{price.text}">Price:</label>
+			<label style="font-weight: 700;" th:text="#{price.text}">Price:</label>
 			<input type="number" class="form-control" th:field="*{price}"
 				placeholder="Surname" />
 		</div>
 		<div class="input-group">
-			<label class="col-sm-2 control-label" th:text="#{description.text}">Description:</label>
+			<label style="font-weight: 700;" th:text="#{description.text}">Description:</label>
 			<input type="text" class="form-control" th:field="*{description}"
 				placeholder="Surname" />
 		</div>

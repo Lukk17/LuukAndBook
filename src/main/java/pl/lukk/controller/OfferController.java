@@ -1,8 +1,6 @@
 package pl.lukk.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.lukk.entity.Offer;
 import pl.lukk.entity.User;
-import pl.lukk.service.AvailabilityService;
+import pl.lukk.repository.OfferRepository;
 import pl.lukk.service.OfferService;
 import pl.lukk.service.UserService;
 
@@ -27,11 +25,11 @@ import pl.lukk.service.UserService;
 @RequestMapping("/offer")
 public class OfferController
 {
-    @Autowired
-    AvailabilityService availabilityService;
 
     @Autowired
     OfferService offerService;
+    @Autowired
+    OfferRepository offerRepo;
 
     @Autowired
     UserService userService;
@@ -45,7 +43,7 @@ public class OfferController
     }
 
     @PostMapping("/add")
-    public String list(@Valid Offer offer, BindingResult bresult, Authentication auth)
+    public String add(@Valid Offer offer, BindingResult bresult, Authentication auth)
     {
         if (bresult.hasErrors())
         {
@@ -54,11 +52,10 @@ public class OfferController
         else
         {
             String email = auth.getName();
-            User user = userService.findByUserEmail(email);
-
-            offerService.saveAddOffer(offer, user);
+            User owner = userService.findByUserEmail(email);
+            
+            offerService.saveAddOffer(offer, owner);
             return "redirect:/offer/list";
-            //            return (offer.getHotelName()+" "+ user);
         }
     }
 
@@ -84,8 +81,18 @@ public class OfferController
         {
 
             offerService.saveEditOffer(formOffer);
-            return "redirect:offer/list";
+            return "redirect:/offer/list";
         }
+    }
+    
+    @GetMapping("/{id}/remove")
+    public String remove(Authentication auth, @PathVariable(value = "id") Long offerId)
+    {
+        String email = auth.getName();
+        User owner = userService.findByUserEmail(email);
+
+            offerService.deleteOffer(offerId, owner);;
+            return "redirect:offer/list";
     }
 
     @GetMapping("/list")
@@ -96,8 +103,8 @@ public class OfferController
         List<Offer> offers = new ArrayList<>();
         try
         {
-
-            model.addAttribute("offerList", offerService.findByUserId(owner.getId()));
+            offers = offerService.findByUserId(owner.getId());
+            model.addAttribute("offerList", offers);
         }
         catch (NullPointerException e)
         {
@@ -108,13 +115,13 @@ public class OfferController
         return "views/offer/list";
     }
 
-    @GetMapping("/{id}/details")
-    public String list(Model model, @PathVariable(value = "id") Long id)
-    {
-        List<LocalDateTime> availableDates = availabilityService.findAvailableDatesByOffersId(id);
-        Collections.sort(availableDates);                                                                               // sort by year
-
-        model.addAttribute("availableDates", availableDates);
+//    @GetMapping("/{id}/details")
+//    public String list(Model model, @PathVariable(value = "id") Long id)
+//    {
+//        List<LocalDateTime> availableDates = availabilityService.findAvailableDatesByOffersId(id);
+//        Collections.sort(availableDates);                                                                               // sort by year
+//
+//        model.addAttribute("availableDates", availableDates);
 
         //        
         //        
@@ -165,7 +172,7 @@ public class OfferController
         //        }
         //
         //        model.addAttribute("january", mon1);                            // list have first entry which is year and then free days
-
-        return "views/offer/details";
-    }
+//
+//        return "views/offer/details";
+//    }
 }

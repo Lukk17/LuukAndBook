@@ -17,4 +17,6 @@ public interface OfferService
 
     List<Offer> findByUserId(Long id);
 
+    void deleteOffer(Long offerId, User owner);
+
 }

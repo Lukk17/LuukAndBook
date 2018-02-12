@@ -7,7 +7,7 @@
 <title>Edit User</title>
 </head>
 <section layout:fragment="content">
-<section style="padding-left: 90em; padding-top: 2em;">
+<section style="padding-left: 70%;  position: fixed; ">
 	<b><p  th:text="|#{roles.text}:|">Roles</p></b>
 		<div th:each="userRole : ${user.roles}">
 			<div th:text="${userRole.name}"></div>
@@ -17,7 +17,7 @@
 			th:text="#{role.edit.text}" class="btn btn-primary">Role edit</a>
 	</section>
 
-	<form th:action="@{/admin/userEdit}" th:object="${user}" method="post" Style="padding-left: 50em;">
+	<form th:action="@{/admin/userEdit}" th:object="${user}" method="post" Style="padding-left: 30%;">
 	
 		<div class="input-group">
 			<label class="col-sm-2 control-label" th:text="#{email.text}">Email:</label>
@@ -60,7 +60,7 @@
 		</div>
 		<div class="input-group">
 			<label class="col-sm-2 control-label" th:text="#{id.text}">ID</label>
-			<input type="number" class="form-control" th:field="*{id}" />
+			<input type="number" class="form-control" th:field="*{id}" disabled="disabled" />
 		</div>
 		<br />
 		<div class="form-group">

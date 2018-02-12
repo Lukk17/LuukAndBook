@@ -2,6 +2,7 @@ package pl.lukk.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.lukk.entity.Offer;
@@ -11,14 +12,26 @@ import pl.lukk.repository.OfferRepository;
 @Service
 public class OfferServiceImpl implements OfferService
 {
+    @Autowired
     private OfferRepository offerRepo;
 
     @Override
     public void saveAddOffer(Offer offer, User owner)
     {
-        offer.setPromoted(false);                                   //  admin can change
-        offer.setOwner(owner);                                      //  safer to set owner here(from spring security session), not to give this choice to user or send in hidden parameter in form
+        offer.setPromoted(false);
+        offer.setOwner(owner);
         offerRepo.save(offer);
+    }
+
+    @Override
+    public void deleteOffer(Long offerId, User owner)
+    {
+        Offer offerToDel = offerRepo.findByOwnerAndId(owner, offerId);
+
+        if (offerToDel != null)
+        {
+            offerRepo.delete(offerToDel);
+        }
     }
 
     @Override
@@ -61,10 +74,10 @@ public class OfferServiceImpl implements OfferService
             databaseOffer.setDescription(offer.getDescription());
         }
 
-        if (offer.getComment() != null)
-        {
-            databaseOffer.setComment(offer.getComment());
-        }
+        //        if (offer.getComment() != null)
+        //        {
+        //            databaseOffer.setComment(offer.getComment());
+        //        }
 
         if (offer.getCountry() != null)
         {
@@ -76,10 +89,10 @@ public class OfferServiceImpl implements OfferService
             databaseOffer.setCity(offer.getCity());
         }
 
-        if (offer.getUser() != null)
-        {
-            databaseOffer.setUser(offer.getUser());
-        }
+        //        if (offer.getUser() != null)
+        //        {
+        //            databaseOffer.setUser(offer.getUser());
+        //        }
 
         databaseOffer.setPromoted(offer.isPromoted());
 
@@ -89,7 +102,7 @@ public class OfferServiceImpl implements OfferService
     @Override
     public Offer findByUserAndId(User owner, Long id)
     {
-        return offerRepo.findByUserAndId(owner, id);
+        return offerRepo.findByOwnerAndId(owner, id);
     }
 
     @Override
@@ -102,6 +115,6 @@ public class OfferServiceImpl implements OfferService
     public List<Offer> findByUserId(Long id)
     {
 
-        return offerRepo.findByUserId(id);
+        return offerRepo.findByOwnerId(id);
     }
 }
