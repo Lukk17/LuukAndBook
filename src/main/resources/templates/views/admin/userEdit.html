@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8" />
+<title>Edit User</title>
+</head>
+<section layout:fragment="content">
+	<form th:action="@{/admin/edit}" th:object="${user}" method="post">
+		<div class="input-group">
+			<label class="col-sm-2 control-label" th:text="#{email.text}">Email:</label>
+			<input type="text" class="form-control" th:field="*{email}" />
+		</div>
+		<div class="input-group">
+			<label class="col-sm-2 control-label" th:text="#{name.text}">Name:</label>
+			<input type="text" class="form-control" th:field="*{name}"
+				placeholder="Name" />
+		</div>
+		<div class="input-group">
+			<label class="col-sm-2 control-label" th:text="#{surname.text}">Surname:</label>
+			<input type="text" class="form-control" th:field="*{surname}"
+				placeholder="Surname" />
+		</div>
+		
+		<div class="input-group">
+			<label class="col-sm-2 control-label" th:text="#{enabled.text}">enabled:</label>
+			<input type="checkbox" class="form-control" th:field="*{enabled}"
+				placeholder="Name" />
+		</div> 
+		<div class="input-group">
+		<label class="col-sm-2 control-label"
+			th:text="#{password.text}">Password</label>
+			<input type="password" class="form-control" th:field="*{password}" />
+		</div>
+		<br />
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<button type="submit" class="btn btn-primary"
+					th:text="#{submit.text}">Submit</button>
+			</div>
+		</div>
+	</form>
+</section>
+</html>
