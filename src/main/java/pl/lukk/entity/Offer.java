@@ -1,5 +1,9 @@
 package pl.lukk.entity;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +46,11 @@ public class Offer
     @Size(max = 3000)
     private String description;
 
-    private boolean promoted;
+    private boolean      promoted;
+    
+    @Column
+    @ElementCollection(targetClass=String.class)
+    private List<String> photoPaths;
 
     @ManyToOne
     @JoinColumn(name = "offer_user")
@@ -56,6 +64,16 @@ public class Offer
 
     @NotBlank
     private String city;
+
+    public List<String> getPhotoPaths()
+    {
+        return photoPaths;
+    }
+
+    public void setPhotoPaths(List<String> photoPaths)
+    {
+        this.photoPaths = photoPaths;
+    }
 
     public Long getId()
     {

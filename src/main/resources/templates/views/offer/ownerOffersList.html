@@ -37,12 +37,12 @@
 							<td th:text="${offer.user}"></td>
 	
 							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/offer/{id}/details(id=${offer.id})}"
+								th:href="@{/offer/owner/{id}/details(id=${offer.id})}"
 								th:text="#{details.text}"> <i class="fa fa-folder"></i>
 									Details
 							</a>
-							<a class="btn btn-primary btn-xs" th:href="@{/offer/{id}/remove(id=${offer.id})}" th:text="#{remove.text}">Remove offer</a>
-							<a class="btn btn-primary btn-xs" th:href="@{/offer/{id}/edit(id=${offer.id})}" th:text="#{edit.text}">Edit offer</a>
+							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/remove(id=${offer.id})}" th:text="#{remove.text}">Remove offer</a>
+							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/edit(id=${offer.id})}" th:text="#{edit.text}">Edit offer</a>
 							</td>
 						</tr>
 					</tbody>

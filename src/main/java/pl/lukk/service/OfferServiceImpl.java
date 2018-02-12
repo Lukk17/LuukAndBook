@@ -1,5 +1,6 @@
 package pl.lukk.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,37 @@ public class OfferServiceImpl implements OfferService
 {
     @Autowired
     private OfferRepository offerRepo;
+    
 
     @Override
     public void saveAddOffer(Offer offer, User owner)
     {
         offer.setPromoted(false);
         offer.setOwner(owner);
+        offerRepo.save(offer);
+    }
+    
+    @Override
+    public void addPhoto(Offer offer, User owner, String photoFilename)
+    {
+        String photoPath = ("src/main/resources/static/uploads/"+photoFilename);
+    //  offer from path must be own by user who want add photo:
+        Offer databaseOffer = offerRepo.findByOwnerAndId(owner, offer.getId());
+        
+        
+        if(databaseOffer.getPhotoPaths()!=null)
+        {
+            List<String> photoPaths = databaseOffer.getPhotoPaths();
+            photoPaths.add(photoPath);
+            offer.setPhotoPaths(photoPaths);
+        }
+        else
+        {
+            List<String> photoPaths = new ArrayList<>();
+            photoPaths.add(photoPath);
+            offer.setPhotoPaths(photoPaths);
+        }
+                
         offerRepo.save(offer);
     }
 

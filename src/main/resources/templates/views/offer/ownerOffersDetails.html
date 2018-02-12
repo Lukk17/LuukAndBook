@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8"/>
+<title>Offer details</title>
+</head>
+<body>
+<section layout:fragment="content">
+		
+		<div class="x_panel">
+		<div class="x_title">
+			<h2 th:text="#{details.text}"></h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<table id="datatable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th th:text="#{hotelName.text}"></th>
+						<th th:text="#{country.text}"></th>
+						<th th:text="#{city.text}"></th>
+						<th th:text="#{roomNumber.text}"></th>
+						<th th:text="#{roomCapacity.text}"></th>
+						<th th:text="#{price.text}"></th>
+						<th th:text="#{description.text}"></th>
+						<th th:text="#{promoted.text}"></th>
+						<th th:text="#{rentingUser.text}"></th>
+						<th th:text="#{comment.text}"></th>
+						<th th:text="#{action.text}">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr>
+						<td th:text="${offer.hotelName}">Hotel name</td>
+						<td th:text="${offer.country}">Country</td>
+						<td th:text="${offer.city}">City</td>
+						<td th:text="${offer.roomNumber}">room number</td>
+						<td th:text="${offer.roomCapacity}">Room capacity</td>
+						<td th:text="${offer.price}">Price</td>
+						<td th:text="${offer.description}">Description</td>
+						<td th:text="${offer.promoted}">Promoted</td>
+						<td th:text="${offer.user}">Renting user</td>
+						<td th:text="${offer.comment}">Comment</td>
+						<td><a class="btn btn-primary btn-xs"
+							th:href="@{/offer/owner/{id}/edit(id=${offer.id})}"
+							th:text="#{edit.text}"> <i class="fa fa-folder"></i> Edit
+								User
+						</a> <a class="btn btn-primary btn-xs"
+							th:href="@{/offer/owner/{id}/remove(id=${offer.id})}"
+							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
+								User
+						</a> 
+						<a class="btn btn-primary btn-xs"
+							th:href="@{/offer/owner/{id}/addPhoto(id=${offer.id})}"
+							th:text="#{add.photo.text}"> <i class="fa fa-folder"></i> Add photo
+						</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+	<div th:each="photoPath : ${offer.photoPaths}">
+	<img th:src="${photoPath}" /> <br />
+	</div>	
+				
+</section>
+</body>
+</html>

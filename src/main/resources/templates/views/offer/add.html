@@ -7,7 +7,7 @@
 <title>Add offer</title>
 </head>
 <section layout:fragment="content">
-<form th:action="@{/offer/add}" th:object="${offer}" method="post" style="padding-left: 30%; padding-top: 2em;">
+<form th:action="@{/offer/owner/add}" th:object="${offer}" method="post" style="padding-left: 30%; padding-top: 2em;">
 		<div class="input-group">
 			<label style="font-weight: 700;" th:text="#{hotelName.text}">Hotel:</label>
 			<input type="text" class="form-control" th:field="*{hotelName}" th:placeholder="#{hotelName.text}" />
