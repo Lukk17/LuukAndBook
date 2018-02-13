@@ -7,30 +7,31 @@
 <title th:text="#{offert.search.text}">Find offer</title>
 </head>
 <section layout:fragment="content">
-<form th:action="@{/offer/user/search}" th:object="${offer}"  method="post" style="padding-left: 30%; padding-top: 2em;">
+<form class="navbar-form" th:action="@{/offer/user/search}" th:object="${offer}"  method="post" style="padding-left: 30%; padding-top: 2em;">
 		<div class="input-group">
-			<label style="font-weight: 700;" th:text="#{country.text}">Country:</label>
+			<label style="font-weight: 700;" th:text="#{country.text}">Country:</label><br/>
 			<input type="text" class="form-control" th:field="*{Country}" th:placeholder="#{country.text}" />
 		</div>
+		<br/>
 		<div class="input-group">
-			<label style="font-weight: 700;" th:text="#{city.text}">City:</label>
+			<label style="font-weight: 700;" th:text="#{city.text}">City:</label><br/>
 			<input type="text" class="form-control" th:field="*{City}" th:placeholder="#{city.text}" />
 		</div>
-		
+		<br/>
 		<div class="input-group">
-			<label style="font-weight: 700;" th:text="#{hotelName.text}">hotelName:</label>
+			<label style="font-weight: 700;" th:text="#{hotelName.text}">hotelName:</label><br/>
 			<input type="text" class="form-control" th:field="*{hotelName}" th:placeholder="#{hotelName.text}" />
 		</div>
-		
+		<br/>
 		<div class="input-group">
-			<label style="font-weight: 700;" th:text="#{roomCapacity.text}">roomCapacity:</label>
-			<input type="number" class="form-control" th:field="*{roomCapacity}" th:placeholder="#{roomCapacity.text}" />
+			<label style="font-weight: 700;" th:text="#{roomCapacity.text}">roomCapacity:</label><br/>
+			<input type="number" class="form-control" th:field="*{roomCapacity}" th:placeholder="#{roomCapacity.text}" style="height:50%" />
 		</div>
 		<br />
 		<div class="form-group">
 			<div class="col-lg-offset-2 col-lg-10">
 				<button type="submit" class="btn btn-primary"
-					th:text="#{submit.text}">Submit</button>
+					th:text="#{search.text}">Submit</button>
 			</div>
 		</div>
 	</form>

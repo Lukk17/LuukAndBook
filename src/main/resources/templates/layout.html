@@ -63,20 +63,18 @@
           |
           | -->
 
-			<!--  SEARCH form start -->
+			<!--  HELLO form start -->
 
-			<div class="nav search-row" id="top_menu" style="margin-left: 400px">
+			 
+			<a href="index.html" class="logo" style="margin-left: 15%; width: 40%; "> 
+			<span sec:authorize="hasRole('ROLE_USER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span>  
+			<span class="lite">Began adventure of </span> lifetime!
+			</a>
 
-				<ul class="nav top-menu">
-					<li>
-						<form class="navbar-form">
-							<input class="form-control" placeholder="Search" type="text" />
-						</form>
-					</li>
-				</ul>
-			</div>
 
-			<!--  SEARCH form end -->
+
+
+			<!--  HELLO form end -->
 
 			<!-- 
           |
@@ -218,28 +216,28 @@
 
 						<li id="mail_notificatoin_bar" class="dropdown"><a
 							data-toggle="dropdown" class="dropdown-toggle" href="#"> <i
-								class="icon-envelope-l"></i> <span class="badge bg-important" th:text="${msgNum}">Unreaded number</span>
+								class="icon-envelope-l"></i> <span class="badge bg-important"
+								th:text="${msgNum}">Unreaded number</span>
 						</a>
 							<ul class="dropdown-menu extended inbox">
 								<li>
-									<p class="blue" th:text="#{message.recent.text}">Recent messages</p>
+									<p class="blue" th:text="#{message.recent.text}">Recent
+										messages</p>
 								</li>
-								
-								
-								<li th:each="msg : ${topMessages}">
-								<a href="#"> <span class="photo">
-									<img  th:src="@{|~/${msg.permaSender.photoPath}|}"
-											/></span> 
-											<span class="subject">
-												<span class="from" th:text="${msg.permaSender.email}">Sender</span> 
-												
-											</span> 
-											<span class="message" th:text="${msg.text}"> Message text
-											</span>
-								</a>
-								</li>
-								
-								<li><a th:href="@{/message/inbox}" th:text="#{see.all.text}">See all</a></li>
+
+
+								<li th:each="msg : ${topMessages}"><a href="#"> <span
+										class="photo"> <img
+											th:src="@{|~/${msg.permaSender.photoPath}|}" /></span> <span
+										class="subject"> <span class="from"
+											th:text="${msg.permaSender.email}">Sender</span>
+
+									</span> <span class="message" th:text="${msg.text}"> Message
+											text </span>
+								</a></li>
+
+								<li><a th:href="@{/message/inbox}"
+									th:text="#{see.all.text}">See all</a></li>
 							</ul></li>
 						<!-- inbox notificatoin end -->
 
@@ -311,23 +309,26 @@
 								<b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu extended logout">
-								<li class="eborder-top"><a th:href="@{/user}">
-										<i class="icon_profile"></i><span th:text="#{profile.text}">
+								<li class="eborder-top"><a th:href="@{/user}"> <i
+										class="icon_profile"></i><span th:text="#{profile.text}">
 											My Profile</span>
 								</a></li>
-								<li><a th:href="@{/message/inbox}"><i class="icon_mail_alt"></i>
-								<span  th:text="#{inbox.text}"> My Inbox</span></a></li>
-								<li><a th:href="@{/message/outbox}"><i class="icon_mail_alt"></i>
-								<span  th:text="#{outbox.text}"> My Outbox</span></a></li>
-								
+								<li><a th:href="@{/message/inbox}"><i
+										class="icon_mail_alt"></i> <span th:text="#{inbox.text}">
+											My Inbox</span></a></li>
+								<li><a th:href="@{/message/outbox}"><i
+										class="icon_mail_alt"></i> <span th:text="#{outbox.text}">
+											My Outbox</span></a></li>
+
 								<li><a href="#"><i class="icon_clock_alt"></i> Timeline</a>
 								</li>
 								<li><a th:href="@{/user/edit}"><i class="icon_key_alt"></i>
 										<span th:text="#{profile.edit.text}"> Edit Profile</span></a></li>
 
 								<li>
-									<form th:action="@{/logout}" method="post">	
-										<button type="submit" class="btn btn-primary" style="padding-left: 40%;padding-right: 33%;"
+									<form th:action="@{/logout}" method="post">
+										<button type="submit" class="btn btn-primary"
+											style="padding-left: 40%; padding-right: 33%;"
 											th:text="#{logout.text}">Logout</button>
 									</form>
 								</li>
