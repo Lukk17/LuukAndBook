@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8"/>
-<title>Add offer</title>
+<title th:text="#{offer.add.text}" >Add offer</title>
 </head>
 <section layout:fragment="content">
 <form th:action="@{/offer/owner/add}" th:object="${offer}" method="post" style="padding-left: 30%; padding-top: 2em;">

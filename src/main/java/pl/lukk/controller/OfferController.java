@@ -157,6 +157,21 @@ public class OfferController
 
         return "views/offer/userOffersDetails";
     }
+    
+    @GetMapping("/user/search")
+    public String search(Model model)
+    {
+        model.addAttribute("offer", new Offer());
+
+        return "views/offer/search";
+    }
+    
+    @PostMapping("/user/search")
+    public String search(Offer offer, Model model)
+    {
+        model.addAttribute("offerList", offerService.search(offer));
+        return "views/offer/userOffersList";
+    }
 
     //    @GetMapping("/{id}/details")
     //    public String list(Model model, @PathVariable(value = "id") Long id)

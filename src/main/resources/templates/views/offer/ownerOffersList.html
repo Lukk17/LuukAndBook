@@ -34,8 +34,8 @@
 							<td th:text="${offer.hotelName}"></td>
 							<td th:text="${offer.roomNumber}"></td>
 							<td th:text="${offer.price}"></td>
-							<td th:text="${offer.user.email}"></td>
-	
+							<td th:if="${offer.user=null}" th:text="${offer.user.email}"></td>
+							<td th:until="${offer.user.email!=null}" th:text="#{lackOf.text}"></td>
 							<td><a class="btn btn-primary btn-xs"
 								th:href="@{/offer/owner/{id}/details(id=${offer.id})}"
 								th:text="#{details.text}"> <i class="fa fa-folder"></i>

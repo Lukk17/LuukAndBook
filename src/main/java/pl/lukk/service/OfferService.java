@@ -21,4 +21,6 @@ public interface OfferService
 
     void saveAddOffer(Offer offer, String ownerEmail);
 
+    List<Offer> search(Offer offer);
+
 }

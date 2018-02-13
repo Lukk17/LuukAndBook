@@ -14,4 +14,12 @@ public interface OfferRepository extends JpaRepository<Offer, Long>
     Offer findByOwnerAndId(User owner, Long id);
 
     List<Offer> findByOwnerId(Long Id);
+    
+    List<Offer> findByCountry(String country);
+    
+    List<Offer> findByCity(String city);
+    
+    List<Offer> findByHotelName(String hotelName);
+    
+    List<Offer> findByRoomCapacity(Long roomCapacity);
 }
