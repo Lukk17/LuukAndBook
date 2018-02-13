@@ -1,7 +1,6 @@
 package pl.lukk.service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,23 @@ public class MessageServiceImpl implements MessageService
     public List<Message> findTop5ByOrderByCreated(User receiver)
     {
         return messageRepo.findTop5ByReceiverOrderByCreated(receiver);
-        
+
     }
-    
+
+    @Override
+    public Message findOneById(String email, Long messageId)
+    {
+        Message msg = messageRepo.findOne(messageId);
+        if (msg.getPermaReceiver().equals(userRepo.findByEmail(email)) || msg.getPermaSender().equals(
+                userRepo.findByEmail(email)))
+        {
+            return msg;
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     @Override
     public void send(Message message, String senderEmail, Long receiverId)
@@ -46,9 +59,33 @@ public class MessageServiceImpl implements MessageService
         //  undeletable entries:
         message.setPermaReceiver(message.getReceiver());
         message.setPermaSender(message.getSender());
-        
+
+        message.setReaded(false);
         message.setCreated(LocalDateTime.now());
         messageRepo.save(message);
+    }
+
+    @Override
+    public void readed(Long messageId, String receiverEmail)
+    {
+        Message message = messageRepo.findOne(messageId);
+
+        if (receiverEmail.equals(message.getReceiver().getEmail()))
+        {
+            message.setReaded(true);
+        }
+
+        messageRepo.save(message);
+    }
+
+    @Override
+    public Integer unreadedNum(String receiverEmail)
+    {
+
+        List<Message> message = messageRepo.findAllByReadedAndReceiver(new Boolean(false),
+                userRepo.findByEmail(receiverEmail));
+
+        return message.size();
     }
 
     @Override
@@ -80,6 +117,5 @@ public class MessageServiceImpl implements MessageService
     {
         return messageRepo.findAllBySenderEmail(email, pageable);
     }
-    
 
 }

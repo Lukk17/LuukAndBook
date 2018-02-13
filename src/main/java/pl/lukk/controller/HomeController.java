@@ -72,6 +72,7 @@ public class HomeController
             User logged = userService.findByUserEmail(auth.getName());
             model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+            model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
         }
         catch (NullPointerException e)
         {

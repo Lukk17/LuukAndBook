@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8"/>
+<title th:text="#{details.text}">Details</title>
+</head>
+<section layout:fragment="content">
+	<div class="x_panel" style="padding-left: 5%;padding-right: 5%;">
+		<div class="x_title">
+			<h2 th:text="#{inbox.text}"></h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<table id="datatable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th 
+							th:text="#{sender.text}"></th>
+						<th 
+							th:text="#{created.text}"></th>
+						<th
+							th:text="#{text.text}"></th>
+							<th
+							th:text="#{readed.text}"></th>
+						<th th:text="#{action.text}">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${msg.permaSender.email}"></td>
+						<td th:text="${msg.created}"></td>
+						<td th:text="${msg.text}"></td>
+						<td th:text="${msg.readed}"></td>
+						<td> <a class="btn btn-primary btn-xs"
+							th:href="@{/message/{id}/messageRemove(id=${msg.id})}"
+							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
+								message
+						</a>
+							<a class="btn btn-primary btn-xs" th:href="@{/message/{id}/send(id=${msg.permaSender.id})}"
+							th:text="#{message.send.new.text}"> <i class="fa fa-folder"></i>Send new mail</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>

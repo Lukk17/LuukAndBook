@@ -16,6 +16,8 @@ public interface MessageRepository extends JpaRepository<Message, Long>
   
     List<Message> findTop5ByReceiverOrderByCreated(User receiver);
     
+    List<Message> findAllByReadedAndReceiver(Boolean readed, User receiver);
+    
     Page<Message> findAllByReceiverEmail(String email, Pageable pageable);
     
     Page<Message> findAllBySenderEmail(String email, Pageable pageable);

@@ -15,32 +15,40 @@ public class Message
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String text;
-    
+
     @ManyToOne
     @JoinColumn(name = "message_sender")
     private User sender;
-    
-    
+
     @ManyToOne
     @JoinColumn(name = "message_receiver")
     private User receiver;
-    
+
     //  perma sender and receiver to save who send/receive even if sender/receiver delete it from mailbox
     @ManyToOne
     @JoinColumn(name = "message_permaSender")
     private User permaSender;
-    
-    
+
     @ManyToOne
     @JoinColumn(name = "message_permaReceiver")
     private User permaReceiver;
-    
+
     private LocalDateTime created;
 
-    
-    
+    private Boolean readed;
+
+    public Boolean getReaded()
+    {
+        return readed;
+    }
+
+    public void setReaded(Boolean readed)
+    {
+        this.readed = readed;
+    }
+
     public User getPermaSender()
     {
         return permaSender;

@@ -35,7 +35,7 @@
 							th:href="@{/message/{id}/messageRemove(id=${msg.id})}"
 							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
 								message
-						</a> <a class="btn btn-primary btn-xs" th:href="@{/message/{id}/details(id=${msg.id})}"
+						</a> <a class="btn btn-primary btn-xs" th:href="@{/message/{id}/receiverDetails(id=${msg.id})}"
 							th:text="#{details.text}"> <i class="fa fa-folder"></i>See details</a>
 							<a class="btn btn-primary btn-xs" th:href="@{/message/{id}/send(id=${msg.permaSender.id})}"
 							th:text="#{reply.text}"> <i class="fa fa-folder"></i>Reply</a>

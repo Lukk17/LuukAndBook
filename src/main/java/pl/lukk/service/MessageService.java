@@ -23,4 +23,10 @@ public interface MessageService
 
     List<Message> findTop5ByOrderByCreated(User receiver);
 
+    Message findOneById(String email, Long messageId);
+
+    void readed(Long messageId, String receiverEmail);
+
+    Integer unreadedNum(String receiverEmail);
+
 }

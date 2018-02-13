@@ -5,7 +5,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8"/>
-<title th:text="#{inbox.text}">Inbox</title>
+<title th:text="#{details.text}">Details</title>
 </head>
 <section layout:fragment="content">
 	<div class="x_panel" style="padding-left: 5%;padding-right: 5%;">
@@ -17,17 +17,17 @@
 			<table id="datatable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th><a class="sorted" sd:pagination-sort="sender"
-							th:text="#{sender.text}"></a></th>
-						<th><a class="sorted" sd:pagination-sort="created"
-							th:text="#{created.text}"></a></th>
-						<th><a class="sorted" sd:pagination-sort="text"
-							th:text="#{text.text}"></a></th>
+						<th 
+							th:text="#{sender.text}"></th>
+						<th 
+							th:text="#{created.text}"></th>
+						<th
+							th:text="#{text.text}"></th>
 						<th th:text="#{action.text}">Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="msg : ${inbox}">
+					<tr>
 						<td th:text="${msg.permaSender.email}"></td>
 						<td th:text="${msg.created}"></td>
 						<td th:text="${msg.text}"></td>
@@ -35,29 +35,13 @@
 							th:href="@{/message/{id}/messageRemove(id=${msg.id})}"
 							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
 								message
-						</a> <a class="btn btn-primary btn-xs" th:href="@{/message/{id}/receiverDetails(id=${msg.id})}"
-							th:text="#{details.text}"> <i class="fa fa-folder"></i>See details</a>
+						</a>
 							<a class="btn btn-primary btn-xs" th:href="@{/message/{id}/send(id=${msg.permaSender.id})}"
 							th:text="#{reply.text}"> <i class="fa fa-folder"></i>Reply</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<div class="row">
-				<div class="col-sm-6">
-					<div sd:pagination-summary="">info</div>
-				</div>
-				<div class="col-sm-6">
-					<nav class="pull-right">
-						<ul class="pagination" sd:pagination="full">
-							<!-- Pagination created by SpringDataDialect, this content is just for mockup -->
-							<li class="disabled"><a href="#" aria-label="Previous"><span
-									aria-hidden="true">&laquo;</span></a></li>
-							<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>

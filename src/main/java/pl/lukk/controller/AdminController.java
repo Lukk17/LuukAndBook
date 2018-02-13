@@ -31,7 +31,7 @@ public class AdminController
 
     @Autowired
     RoleService roleService;
-    
+
     @Autowired
     MessageService messageService;
 
@@ -95,7 +95,7 @@ public class AdminController
 
         return "redirect:/admin/userList";
     }
-    
+
     @GetMapping("/{id}/userRemove")
     public String remove(Model model, @PathVariable(name = "id") Long id)
     {
@@ -103,15 +103,16 @@ public class AdminController
 
         return "views/admin/roleChange";
     }
-    
+
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
         try
         {
             User logged = userService.findByUserEmail(auth.getName());
-            model.addAttribute("logedUser", logged );
+            model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+            model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
         }
         catch (NullPointerException e)
         {
