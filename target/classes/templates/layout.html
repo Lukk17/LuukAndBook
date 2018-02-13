@@ -88,10 +88,20 @@
           |
           |
           | -->
+
 			<div sec:authorize="hasRole('ROLE_ANONYMOUS')"
 				class="top-nav notification-row">
-				<a th:href="@{/login}" th:text="Login" class="logo"> </a>
+				<a th:href="@{/login}" th:text="#{login.text}" class="logo"
+					Style="color: #99C34B"> </a>
 			</div>
+
+			<div sec:authorize="hasRole('ROLE_ANONYMOUS')"
+				class="top-nav notification-row">
+				<a th:href="@{/user/add}" th:text="#{register.text}" class="logo"
+					Style="color: #983EBB"> </a>
+			</div>
+
+
 
 			<!-- NOTIFICATION dropdown start-->
 			<div sec:authorize="hasRole('ROLE_USER')">
@@ -212,39 +222,24 @@
 						</a>
 							<ul class="dropdown-menu extended inbox">
 								<li>
-									<p class="blue">You have 5 new messages</p>
+									<p class="blue" th:text="#{message.recent.text}">Recent messages</p>
 								</li>
-								<li><a href="#"> <span class="photo"><img
-											alt="avatar" src="./img/avatar-mini.jpg"
-											th:src="@{/img/avatar-mini.jpg}" /></span> <span class="subject">
-											<span class="from">Greg Martin</span> <span class="time">1
-												min</span>
-									</span> <span class="message"> I really like this admin panel.
-									</span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											alt="avatar" src="./img/avatar-mini.jpg"
-											th:src="@{/img/avatar-mini.jpg}" /></span> <span class="subject">
-											<span class="from">Bob Mckenzie</span> <span class="time">5
-												mins</span>
-									</span> <span class="message"> Hi, What is next project plan? </span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											alt="avatar" src="./img/avatar-mini.jpg"
-											th:src="@{/img/avatar-mini.jpg}" /></span> <span class="subject">
-											<span class="from">Phillip Park</span> <span class="time">2
-												hrs</span>
-									</span> <span class="message"> I am like to buy this Admin
-											Template. </span>
-								</a></li>
-								<li><a href="#"> <span class="photo"><img
-											alt="avatar" src="./img/avatar-mini.jpg"
-											th:src="@{/img/avatar-mini.jpg}" /></span> <span class="subject">
-											<span class="from">Ray Munoz</span> <span class="time">1
-												day</span>
-									</span> <span class="message"> Icon fonts are great. </span>
-								</a></li>
-								<li><a href="#">See all messages</a></li>
+								
+								
+								<li th:each="msg : ${topMessages}">
+								<a href="#"> <span class="photo">
+									<img  th:src="@{|~/${msg.permaSender.photoPath}|}"
+											/></span> 
+											<span class="subject">
+												<span class="from" th:text="${msg.permaSender.email}">Sender</span> 
+												
+											</span> 
+											<span class="message" th:text="${msg.text}"> Message text
+											</span>
+								</a>
+								</li>
+								
+								<li><a th:href="@{/message/inbox}" th:text="#{see.all.text}">See all</a></li>
 							</ul></li>
 						<!-- inbox notificatoin end -->
 
@@ -309,25 +304,33 @@
 
 						<li class="dropdown"><a data-toggle="dropdown"
 							class="dropdown-toggle" href="#"> <span class="profile-ava">
-									<img style="height: 40px; width: 40px;" alt="profile.photo.text" src="img/avatar1_small.jpg"
-									th:src="@{|~/${logedUser.photoPath}|}" /> 
+									<img style="height: 40px; width: 40px;"
+									alt="profile.photo.text" src="img/avatar1_small.jpg"
+									th:src="@{|~/${logedUser.photoPath}|}" />
 							</span> <span class="username" sec:authentication="name">username</span>
 								<b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu extended logout">
-								<li class="eborder-top"><a th:href="@{/user}"
-									 >
-										<i class="icon_profile"></i><span th:text="#{profile.text}"> My Profile</span>
+								<li class="eborder-top"><a th:href="@{/user}">
+										<i class="icon_profile"></i><span th:text="#{profile.text}">
+											My Profile</span>
 								</a></li>
-								<li><a href="#"><i class="icon_mail_alt"></i> My Inbox</a></li>
+								<li><a th:href="@{/message/inbox}"><i class="icon_mail_alt"></i>
+								<span  th:text="#{inbox.text}"> My Inbox</span></a></li>
+								<li><a th:href="@{/message/outbox}"><i class="icon_mail_alt"></i>
+								<span  th:text="#{outbox.text}"> My Outbox</span></a></li>
+								
 								<li><a href="#"><i class="icon_clock_alt"></i> Timeline</a>
 								</li>
-								<li><a th:href="@{/user/edit}" ><i
-										class="icon_key_alt"></i> 
+								<li><a th:href="@{/user/edit}"><i class="icon_key_alt"></i>
 										<span th:text="#{profile.edit.text}"> Edit Profile</span></a></li>
-								
-								<li><a th:href="@{/logout}" ><i class="icon_genius" ></i>
-										<span th:text="#{logout.text}">Log Out</span></a></li>
+
+								<li>
+									<form th:action="@{/logout}" method="post">	
+										<button type="submit" class="btn btn-primary" style="padding-left: 40%;padding-right: 33%;"
+											th:text="#{logout.text}">Logout</button>
+									</form>
+								</li>
 							</ul></li>
 						<!-- USER LOGIN dropdown end -->
 
@@ -376,7 +379,7 @@
 		<!--SIDEBAR start-->
 
 		<aside>
-			<div id="sidebar" class="nav-collapse " Style="width:15%">
+			<div id="sidebar" class="nav-collapse " Style="width: 15%">
 
 				<!-- 
           |

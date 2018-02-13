@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.lukk.entity.User;
+import pl.lukk.service.MessageService;
 import pl.lukk.service.StorageService;
 import pl.lukk.service.UserService;
 
@@ -21,6 +22,9 @@ public class HomeController
 
     @Autowired
     StorageService storageService;
+
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/403")
     public String permissionError()
@@ -40,8 +44,6 @@ public class HomeController
     {
         return "views/admin";
     }
-
-    
 
     @GetMapping(
     { "/", "/index" })
@@ -65,8 +67,16 @@ public class HomeController
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
-        User logedUser = userService.findByUserEmail(auth.getName());
-        model.addAttribute("logedUser", logedUser );
+        try
+        {
+            User logged = userService.findByUserEmail(auth.getName());
+            model.addAttribute("logedUser", logged);
+            model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+        }
+        catch (NullPointerException e)
+        {
+
+        }
     }
 
 }

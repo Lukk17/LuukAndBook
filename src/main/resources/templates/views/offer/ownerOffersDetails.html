@@ -3,7 +3,7 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8"/>
-<title>Offer details</title>
+<title th:text="#{details.text}">Offer details</title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -55,6 +55,7 @@
 							th:href="@{/offer/owner/{id}/addPhoto(id=${offer.id})}"
 							th:text="#{add.photo.text}"> <i class="fa fa-folder"></i> Add photo
 						</a>
+						
 						</td>
 					</tr>
 				</tbody>

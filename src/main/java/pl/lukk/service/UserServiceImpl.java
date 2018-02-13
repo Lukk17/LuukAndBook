@@ -70,8 +70,38 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void saveEditUser(User databaseUser, User userChanges)
+    public void saveEditUser(String email, User userChanges)
     {
+        User databaseUser = userRepository.findByEmail(email);
+        
+        
+        if (userChanges.getName() != null)
+        {
+            databaseUser.setName(userChanges.getName());
+        }
+
+        if (userChanges.getSurname() != null)
+        {
+            databaseUser.setSurname(userChanges.getSurname());
+        }
+
+        if (userChanges.getOfferts() != null)
+        {
+            databaseUser.setOfferts(userChanges.getOfferts());
+        }
+
+        databaseUser.setEnabled(userChanges.getEnabled());
+
+        userRepository.save(databaseUser);
+
+    }
+    
+    @Override
+    public void adminEditUser(User userChanges)
+    {
+        User databaseUser = userRepository.findByEmail(userChanges.getEmail());
+        
+        
         if (userChanges.getName() != null)
         {
             databaseUser.setName(userChanges.getName());

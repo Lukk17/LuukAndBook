@@ -1,6 +1,5 @@
 package pl.lukk.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.lukk.entity.Offer;
 import pl.lukk.entity.User;
+import pl.lukk.service.MessageService;
 import pl.lukk.service.OfferService;
 import pl.lukk.service.StorageService;
 import pl.lukk.service.UserService;
@@ -40,6 +40,9 @@ public class OfferController
 
     @Autowired
     StorageService storageService;
+
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/owner/add")
     public String add(Model model)
@@ -133,21 +136,21 @@ public class OfferController
     public String addPhoto(@RequestParam("photo") MultipartFile photo, RedirectAttributes redirectAttributes,
             Authentication auth, HttpSession ses)
     {
-            String email = auth.getName();
-            User owner = userService.findByUserEmail(email);
-            Long offerId = (Long) ses.getAttribute("offerId");
+        String email = auth.getName();
+        User owner = userService.findByUserEmail(email);
+        Long offerId = (Long) ses.getAttribute("offerId");
 
-            storageService.store(photo);
+        storageService.store(photo);
 
-            offerService.addPhoto(offerId, owner, photo.getOriginalFilename());
+        offerService.addPhoto(offerId, owner, photo.getOriginalFilename());
 
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded " + photo.getOriginalFilename() + "!");
-            
-            ses.removeAttribute("offerId");
-            
-            return "redirect:/offer/owner/list";
-        
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + photo.getOriginalFilename() + "!");
+
+        ses.removeAttribute("offerId");
+
+        return "redirect:/offer/owner/list";
+
     }
 
     @GetMapping("/owner/{id}/details")
@@ -157,10 +160,9 @@ public class OfferController
         User owner = userService.findByUserEmail(email);
         //  only owner can see this page
         Offer offer = offerService.findByUserAndId(owner, offerId);
-        
+
         model.addAttribute("offer", offer);
-        
-        
+
         return "views/offer/ownerOffersDetails";
     }
 
@@ -224,11 +226,19 @@ public class OfferController
     //
     //        return "views/offer/details";
     //    }
-    
+
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
-        User logedUser = userService.findByUserEmail(auth.getName());
-        model.addAttribute("logedUser", logedUser );
+        try
+        {
+            User logged = userService.findByUserEmail(auth.getName());
+            model.addAttribute("logedUser", logged);
+            model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+        }
+        catch (NullPointerException e)
+        {
+
+        }
     }
 }

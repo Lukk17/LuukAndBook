@@ -54,12 +54,12 @@
 							th:href="@{/admin/{id}/userEdit(id=${user.id})}"
 							th:text="#{edit.text}"> <i class="fa fa-folder"></i> Edit
 								User
-						</a> <a class="btn btn-primary btn-xs"
-							th:href="@{/admin/{id}/userRemove(id=${user.id})}"
-							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
-								User
 						</a> <a class="btn btn-primary btn-xs" th:href="@{/admin/{id}/roleChange(id=${user.id})}"
 							th:text="#{role.edit.text}"> <i class="fa fa-folder"></i>Role edit</a>
+							<a class="btn btn-primary btn-xs"
+							th:href="@{/message/{id}/send(id=${user.id})}"
+							th:text="#{message.send.text}"> <i class="fa fa-folder"></i> Send message
+						</a> 
 						</td>
 					</tr>
 				</tbody>

@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Login Page </title>
+  <title th:text="#{login.text}">Login Page </title>
 
   <!-- bootstrap theme -->
   <link href="cssLogin/bootstrap-theme.css" rel="stylesheet"/>
@@ -25,14 +25,16 @@
         <p class="login-img"><i class="icon_lock_alt"></i></p>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input type="text" class="form-control" placeholder="Email" autofocus="autofocus" name="username"/>
+          <input type="text" class="form-control" th:placeholder="#{email.text}" autofocus="autofocus" name="username"/>
         </div>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-          <input type="password" class="form-control" placeholder="Password" name="password" />
+          <input type="password" class="form-control" th:placeholder="#{password.text}" name="password" />
         </div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-        <a th:href="@{/user/add}" th:text="#{register.text}">Register</a>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{login.text}">Login</button>
+        <div  Style="margin-top:10%; font-weight: 700; padding: 0% 0% 0% 37%;">
+        <a  th:href="@{/user/add}" th:text="#{register.text}" >Register</a>
+        </div>
         
       </div>
     </form>

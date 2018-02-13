@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import pl.lukk.entity.User;
+import pl.lukk.service.MessageService;
 import pl.lukk.service.UserService;
 
 @Controller
@@ -27,6 +27,9 @@ public class UserController
     @Autowired
     UserService userService;
 
+    @Autowired
+    MessageService messageService;
+
     @GetMapping
     public String user(Authentication auth, Model model)
     {
@@ -34,7 +37,7 @@ public class UserController
 
         return "views/user";
     }
-    
+
     @GetMapping("/add")
     public String add(Model model)
     {
@@ -68,16 +71,13 @@ public class UserController
     @PostMapping("/edit")
     public String edit(@Valid User formUser, BindingResult bresult, Authentication auth)
     {
-        String email = auth.getName();
-        User databaseUser = userService.findByUserEmail(email);
-
-        if (bresult.hasErrors() || !userService.checkPassword(formUser.getPassword(), databaseUser.getPassword()))
+        if (bresult.hasErrors())
         {
-            return "user/edit";
+            return "redirect:/user/edit";
         }
         else
         {
-            userService.saveEditUser(databaseUser, formUser);
+            userService.saveEditUser(auth.getName(), formUser);
 
             return "redirect:/user";
         }
@@ -89,26 +89,33 @@ public class UserController
         model.addAttribute("page", userService.findAll(pageable));
         return "views/user/list";
     }
-    
+
     @GetMapping("/changePhoto")
     public String photoChange()
     {
         return "views/user/changePhoto";
     }
-    
+
     @PostMapping("/changePhoto")
-    public String photoChange(@RequestParam("photo") MultipartFile photo, 
-             Authentication auth)
+    public String photoChange(@RequestParam("photo") MultipartFile photo, Authentication auth)
     {
-        userService.savePhoto(auth.getName(),photo);
-        
+        userService.savePhoto(auth.getName(), photo);
+
         return "redirect:/user";
     }
 
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
-        User logedUser = userService.findByUserEmail(auth.getName());
-        model.addAttribute("logedUser", logedUser );
+        try
+        {
+            User logged = userService.findByUserEmail(auth.getName());
+            model.addAttribute("logedUser", logged);
+            model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+        }
+        catch (NullPointerException e)
+        {
+
+        }
     }
 }

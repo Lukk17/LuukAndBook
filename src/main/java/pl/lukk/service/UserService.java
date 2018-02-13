@@ -24,10 +24,12 @@ public interface UserService
 
     Page<User> findAll(Pageable pageable);
 
-    void saveEditUser(User databaseUser, User userChanges);
-
     void roleChange(Long userId, List<Long> rolesId);
 
     void savePhoto(String email, MultipartFile photo);
+
+    void saveEditUser(String email, User userChanges);
+
+    void adminEditUser(User userChanges);
 
 }

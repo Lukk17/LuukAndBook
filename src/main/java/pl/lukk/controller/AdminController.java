@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.lukk.entity.Role;
 import pl.lukk.entity.User;
+import pl.lukk.service.MessageService;
 import pl.lukk.service.RoleService;
 import pl.lukk.service.UserService;
 
@@ -30,6 +31,9 @@ public class AdminController
 
     @Autowired
     RoleService roleService;
+    
+    @Autowired
+    MessageService messageService;
 
     @GetMapping("/panel")
     public String panel()
@@ -60,8 +64,7 @@ public class AdminController
     @PostMapping("/userEdit")
     public String edit(User formUser)
     {
-        User databaseUser = userService.findByUserId(formUser.getId());
-        userService.saveEditUser(databaseUser, formUser);
+        userService.adminEditUser(formUser);
 
         return "redirect:/admin/userList";
 
@@ -93,11 +96,27 @@ public class AdminController
         return "redirect:/admin/userList";
     }
     
+    @GetMapping("/{id}/userRemove")
+    public String remove(Model model, @PathVariable(name = "id") Long id)
+    {
+        userService.delete(id);
+
+        return "views/admin/roleChange";
+    }
+    
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {
-        User logedUser = userService.findByUserEmail(auth.getName());
-        model.addAttribute("logedUser", logedUser );
+        try
+        {
+            User logged = userService.findByUserEmail(auth.getName());
+            model.addAttribute("logedUser", logged );
+            model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
+        }
+        catch (NullPointerException e)
+        {
+
+        }
     }
 
 }
