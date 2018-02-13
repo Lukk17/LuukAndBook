@@ -5,7 +5,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
-<title>Your offers list</title>
+<title th:text="#{offer.list.text}">Your offers list</title>
 </head>
 <body>
 	<section layout:fragment="content">
@@ -34,7 +34,7 @@
 							<td th:text="${offer.hotelName}"></td>
 							<td th:text="${offer.roomNumber}"></td>
 							<td th:text="${offer.price}"></td>
-							<td th:text="${offer.user}"></td>
+							<td th:text="${offer.user.email}"></td>
 	
 							<td><a class="btn btn-primary btn-xs"
 								th:href="@{/offer/owner/{id}/details(id=${offer.id})}"

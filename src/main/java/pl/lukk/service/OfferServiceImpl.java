@@ -9,30 +9,34 @@ import org.springframework.stereotype.Service;
 import pl.lukk.entity.Offer;
 import pl.lukk.entity.User;
 import pl.lukk.repository.OfferRepository;
+import pl.lukk.repository.UserRepository;
 
 @Service
 public class OfferServiceImpl implements OfferService
 {
     @Autowired
     private OfferRepository offerRepo;
-    
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
-    public void saveAddOffer(Offer offer, User owner)
+    public void saveAddOffer(Offer offer, String ownerEmail)
     {
+        User owner = userRepo.findByEmail(ownerEmail);
         offer.setPromoted(false);
         offer.setOwner(owner);
         offerRepo.save(offer);
     }
-    
+
     @Override
-    public void addPhoto(Long offerId, User owner, String photoFilename)
+    public void addPhoto(Long offerId, String ownerEmail, String photoFilename)
     {
-        String photoPath = ("../uploads/"+photoFilename);
-    //  offer from path must be own by user who want add photo:
+        User owner = userRepo.findByEmail(ownerEmail);
+        String photoPath = ("../uploads/" + photoFilename);
+        //  offer from path must be own by user who want add photo:
         Offer databaseOffer = offerRepo.findByOwnerAndId(owner, offerId);
-        
-        
+
         try
         {
             List<String> photoPaths = databaseOffer.getPhotoPaths();
@@ -45,13 +49,14 @@ public class OfferServiceImpl implements OfferService
             photoPaths.add(photoPath);
             databaseOffer.setPhotoPaths(photoPaths);
         }
-                
+
         offerRepo.save(databaseOffer);
     }
 
     @Override
-    public void deleteOffer(Long offerId, User owner)
+    public void deleteOffer(Long offerId, String ownerEmail)
     {
+        User owner = userRepo.findByEmail(ownerEmail);
         Offer offerToDel = offerRepo.findByOwnerAndId(owner, offerId);
 
         if (offerToDel != null)
@@ -126,9 +131,10 @@ public class OfferServiceImpl implements OfferService
     }
 
     @Override
-    public Offer findByUserAndId(User owner, Long id)
+    public Offer findByUserAndId(String ownerEmail, Long id)
     {
-        return offerRepo.findByOwnerAndId(owner, id);
+
+        return offerRepo.findByOwnerAndId(userRepo.findByEmail(ownerEmail), id);
     }
 
     @Override
@@ -138,9 +144,18 @@ public class OfferServiceImpl implements OfferService
     }
 
     @Override
-    public List<Offer> findByUserId(Long id)
+    public List<Offer> findByUserId(String userEmail)
     {
+        User user = userRepo.findByEmail(userEmail);
 
-        return offerRepo.findByOwnerId(id);
+        try
+        {
+            return offerRepo.findByOwnerId(user.getId());
+        }
+        catch (NullPointerException e)
+        {
+            return new ArrayList<>();
+        }
+
     }
 }

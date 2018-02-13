@@ -25,7 +25,7 @@
 						<th
 							th:text="#{price.text}"></th>
 						<th
-							th:text="#{rentingUser.text}"></th>
+							th:text="#{owner.text}"></th>
 						<th th:text="#{details.text}">Details</th>
 						</tr>
 					</thead>
@@ -34,15 +34,13 @@
 							<td th:text="${offer.hotelName}"></td>
 							<td th:text="${offer.roomNumber}"></td>
 							<td th:text="${offer.price}"></td>
-							<td th:text="${offer.user.email}"></td>
+							<td th:text="${offer.owner.email}"></td>
 	
 							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/offer/owner/{id}/details(id=${offer.id})}"
+								th:href="@{/offer/user/{id}/details(id=${offer.id})}"
 								th:text="#{details.text}"> <i class="fa fa-folder"></i>
 									Details
 							</a>
-							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/remove(id=${offer.id})}" th:text="#{remove.text}">Remove offer</a>
-							<a class="btn btn-primary btn-xs" th:href="@{/offer/owner/{id}/edit(id=${offer.id})}" th:text="#{edit.text}">Edit offer</a>
 							</td>
 						</tr>
 					</tbody>

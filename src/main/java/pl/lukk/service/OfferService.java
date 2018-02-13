@@ -7,18 +7,18 @@ import pl.lukk.entity.User;
 
 public interface OfferService
 {
-    Offer findByUserAndId(User owner, Long id);
-
-    void saveAddOffer(Offer offer, User owner);
+    Offer findByUserAndId(String ownerEmail, Long id);
 
     Offer findOneById(Long id);
 
     void saveEditOffer(Offer offer);
 
-    List<Offer> findByUserId(Long id);
+    List<Offer> findByUserId(String userEmail);
 
-    void deleteOffer(Long offerId, User owner);
+    void deleteOffer(Long offerId, String ownerEmail);
 
-    void addPhoto(Long offerId, User owner, String photoFilename);
+    void addPhoto(Long offerId, String ownerEmail, String photoFilename);
+
+    void saveAddOffer(Offer offer, String ownerEmail);
 
 }

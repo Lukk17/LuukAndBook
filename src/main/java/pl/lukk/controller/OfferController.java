@@ -1,6 +1,5 @@
 package pl.lukk.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -47,8 +46,8 @@ public class OfferController
     @GetMapping("/owner/add")
     public String add(Model model)
     {
-        Offer offer = new Offer();
-        model.addAttribute("offer", offer);
+        model.addAttribute("offer", new Offer());
+
         return "views/offer/add";
     }
 
@@ -61,10 +60,7 @@ public class OfferController
         }
         else
         {
-            String email = auth.getName();
-            User owner = userService.findByUserEmail(email);
-
-            offerService.saveAddOffer(offer, owner);
+            offerService.saveAddOffer(offer, auth.getName());
             return "redirect:/offer/owner/list";
         }
     }
@@ -72,10 +68,7 @@ public class OfferController
     @GetMapping("/owner/{id}/edit")
     public String edit(Model model, Authentication auth, @PathVariable(value = "id") Long id)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
-        Offer offer = offerService.findByUserAndId(owner, id);
-        model.addAttribute("offer", offer);
+        model.addAttribute("offer", offerService.findByUserAndId(auth.getName(), id));
 
         return "views/offer/edit";
     }
@@ -98,30 +91,17 @@ public class OfferController
     @GetMapping("/owner/{id}/remove")
     public String remove(Authentication auth, @PathVariable(value = "id") Long offerId)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
+        offerService.deleteOffer(offerId, auth.getName());
 
-        offerService.deleteOffer(offerId, owner);
-        ;
         return "redirect:offer/owner/list";
     }
 
     @GetMapping("/owner/list")
-    public String list(Model model, Authentication auth)
+    public String ownerList(Model model, Authentication auth)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
-        List<Offer> offers = new ArrayList<>();
-        try
-        {
-            offers = offerService.findByUserId(owner.getId());
-            model.addAttribute("offerList", offers);
-        }
-        catch (NullPointerException e)
-        {
-            offers = new ArrayList<>();
-            model.addAttribute("offerList", offers);
-        }
+        List<Offer> offers = offerService.findByUserId(auth.getName());
+        model.addAttribute("offerList", offers);
+
         return "views/offer/ownerOffersList";
     }
 
@@ -136,34 +116,46 @@ public class OfferController
     public String addPhoto(@RequestParam("photo") MultipartFile photo, RedirectAttributes redirectAttributes,
             Authentication auth, HttpSession ses)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
         Long offerId = (Long) ses.getAttribute("offerId");
 
+        offerService.addPhoto(offerId, auth.getName(), photo.getOriginalFilename());
         storageService.store(photo);
 
-        offerService.addPhoto(offerId, owner, photo.getOriginalFilename());
+        ses.removeAttribute("offerId");
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + photo.getOriginalFilename() + "!");
-
-        ses.removeAttribute("offerId");
 
         return "redirect:/offer/owner/list";
 
     }
 
     @GetMapping("/owner/{id}/details")
-    public String details(Model model, @PathVariable(value = "id") Long offerId, Authentication auth)
+    public String ownerDetails(Model model, @PathVariable(value = "id") Long offerId, Authentication auth)
     {
-        String email = auth.getName();
-        User owner = userService.findByUserEmail(email);
         //  only owner can see this page
-        Offer offer = offerService.findByUserAndId(owner, offerId);
-
+        Offer offer = offerService.findByUserAndId(auth.getName(), offerId);
         model.addAttribute("offer", offer);
 
         return "views/offer/ownerOffersDetails";
+    }
+
+    @GetMapping("/user/list")
+    public String userList(Model model, Authentication auth)
+    {
+        List<Offer> offers = offerService.findByUserId(auth.getName());
+        model.addAttribute("offerList", offers);
+
+        return "views/offer/userOffersList";
+    }
+    
+    @GetMapping("/user/{id}/details")
+    public String userDetails(Model model, @PathVariable(value = "id") Long offerId, Authentication auth)
+    {
+        Offer offer = offerService.findByUserAndId(auth.getName(), offerId);
+        model.addAttribute("offer", offer);
+
+        return "views/offer/userOffersDetails";
     }
 
     //    @GetMapping("/{id}/details")
