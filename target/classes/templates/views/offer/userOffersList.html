@@ -21,7 +21,11 @@
 								<th
 							th:text="#{hotelName.text}"></th>
 						<th
-							th:text="#{roomNumber.text}"></th>
+							th:text="#{city.text}"></th>
+							<th
+							th:text="#{country.text}"></th>
+							<th
+							th:text="#{roomCapacity.text}"></th>
 						<th
 							th:text="#{price.text}"></th>
 						<th
@@ -32,7 +36,9 @@
 					<tbody>
 						<tr th:each="offer : ${offerList}">
 							<td th:text="${offer.hotelName}"></td>
-							<td th:text="${offer.roomNumber}"></td>
+							<td th:text="${offer.city}"></td>
+							<td th:text="${offer.country}"></td>
+							<td th:text="${offer.roomCapacity}"></td>
 							<td th:text="${offer.price}"></td>
 							<td th:text="${offer.owner.email}"></td>
 	

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,256 +137,43 @@ public class OfferServiceImpl implements OfferService
     @Override
     public List<Offer> search(Offer offer)
     {
+        List<Offer> allOffers = offerRepo.findAll();
         
-        List<Offer> result = new ArrayList<>();
-        List<Offer> byCity = null;
-        List<Offer> byCountry = null;
-        List<Offer> byHotelName = null;
-        List<Offer> byRoomCapacity = null;
+            return filter(allOffers, offer.getCity(), offer.getCountry(), offer.getHotelName(), offer.getRoomCapacity());
         
-        Set<Offer> setRes = new HashSet<>();
-        try
-        {
-            byCity = offerRepo.findByCity(offer.getCity());
-
-        }
-        catch (NullPointerException e)
-        {
-        }
-        try
-        {
-            byCountry = offerRepo.findByCountry(offer.getCountry());
-
-            if (byCountry != null)
-            {
-                for (Offer o : byCountry)
-                {
-                    result.add(o);
-                }
-            }
-        }
-        catch (NullPointerException e)
-        {
-        }
-        try
-        {
-            byHotelName = offerRepo.findByHotelName(offer.getHotelName());
-
-            if (byHotelName != null)
-            {
-                for (Offer o : byHotelName)
-                {
-                    result.add(o);
-                }
-            }
-        }
-        catch (NullPointerException e)
-        {
-        }
-        try
-        {
-            byRoomCapacity = offerRepo.findByRoomCapacity(offer.getRoomCapacity());
-
-            if (byRoomCapacity != null)
-            {
-                for (Offer o : byRoomCapacity)
-                {
-                    result.add(o);
-                }
-            }
-        }
-        catch (NullPointerException e)
-        {
-        }
-        
-        if (byCity != null)
-        {
-            for (Offer a : byCity)
-            {
-                if (byCountry != null)
-                {
-                    for (Offer b : byCountry)
-                    {
-                        if (b.equals(a))
-                        {
-                            if (byHotelName != null)
-                            {
-                                for (Offer c : byHotelName)
-                                {
-                                    if (c.equals(b))
-                                    {
-                                        if (byRoomCapacity != null)
-                                        {
-                                            for (Offer d : byRoomCapacity)
-                                            {
-                                                if (d.equals(c))
-                                                {
-                                                    result.add(d);
-                                                    setRes.add(d);
-                                                }
-                                            }
-                                        }
-
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                if (byRoomCapacity != null)
-                                {
-                                    for (Offer c : byRoomCapacity)
-                                    {
-                                        if (c.equals(b))
-                                        {
-                                            result.add(c);
-                                            setRes.add(c);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (byHotelName != null)
-                    {
-                        for (Offer b : byHotelName)
-                        {
-                            if (b.equals(a))
-                            {
-                                if (byRoomCapacity != null)
-                                {
-                                    for (Offer c : byRoomCapacity)
-                                    {
-                                        if (c.equals(b))
-                                        {
-                                            result.add(c);
-                                            setRes.add(c);
-                                        }
-                                    }
-                                }
-
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        if (byRoomCapacity != null)
-                        {
-                            for (Offer b : byRoomCapacity)
-                            {
-                                if (b.equals(a))
-                                {
-                                    result.add(b);
-                                    setRes.add(b);
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-        else
-        {
-            if (byCountry != null)
-            {
-                for (Offer a : byCountry)
-                {
-
-                    if (byHotelName != null)
-                    {
-                        for (Offer b : byHotelName)
-                        {
-                            if (b.equals(a))
-                            {
-                                if (byRoomCapacity != null)
-                                {
-                                    for (Offer c : byRoomCapacity)
-                                    {
-                                        if (c.equals(b))
-                                        {
-                                            result.add(c);
-                                            setRes.add(c);
-                                        }
-                                    }
-                                }
-
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        if (byRoomCapacity != null)
-                        {
-                            for (Offer b : byRoomCapacity)
-                            {
-                                if (b.equals(a))
-                                {
-                                    result.add(b);
-                                    setRes.add(b);
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-            else
-            {
-                if (byHotelName != null)
-                {
-                    for (Offer a : byHotelName)
-                    {
-
-                        if (byRoomCapacity != null)
-                        {
-                            for (Offer b : byRoomCapacity)
-                            {
-                                if (b.equals(a))
-                                {
-                                    result.add(b);
-                                    setRes.add(b);
-                                }
-                            }
-                        }
-
-                    }
-                }
-                else
-                {
-                    if (byRoomCapacity != null)
-                    {
-                        for (Offer a : byRoomCapacity)
-                        {
-
-                            result.add(a);
-                            setRes.add(a);
-
-                        }
-                    }
-                }
-
-            }
-        }
-        List <Offer> temp = new ArrayList<>();
-        
-        for(Offer o : setRes)
-        {
-            temp.add(o);
-        }
-
-        return temp;
     }
+    
+    private static List<Offer> filter(List<Offer> allOffers, String city, String country, String hotelName, Long roomCapacity )
+    {
+        return allOffers.stream()
+                 .filter(addFilter(city, offer -> city.equals(offer.getCity())))
+                 .filter(addFilter(country, offer -> country.equals(offer.getCountry())))
+                 .filter(addFilter(hotelName, offer -> hotelName.equals(offer.getHotelName())))
+                 .filter(addFilter(roomCapacity, offer -> roomCapacity.equals(offer.getRoomCapacity())))
+                 .collect(Collectors.toList());
+    }
+
+    private static Predicate<Offer> addFilter(Object value, Predicate<Offer> predicate) 
+    {
+        if(value != null){
+            return predicate;
+        }
+        return offer -> true;
+    }
+    
+    private static Predicate<Offer> addFilter(String value, Predicate<Offer> predicate) 
+    {
+        if(value != null && !value.isEmpty()){
+            return predicate;
+        }
+        return offer -> true;
+    }
+    
+    
 
     @Override
     public Offer findByUserAndId(String ownerEmail, Long id)
     {
-
         return offerRepo.findByOwnerAndId(userRepo.findByEmail(ownerEmail), id);
     }
 
