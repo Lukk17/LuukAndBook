@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{offer.list.text}">Your offers list</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="x_panel" style="padding-left: 5%;">
+			<div class="x_title">
+				<h2 th:text="#{offer.list.text}"></h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<form th:action="@{/booking/offer/book}"
+					method="post">
+					<table id="datatable" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th th:text="#{booked.date.text}"></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="date : ${availableDates}">
+								<td >
+								<label th:text="${date}"></label>
+								<input type="checkbox"
+									 name="date" th:value="${date}"/></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="hidden" name="id" th:value="${id}"/>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button type="submit" class="btn btn-primary"
+								th:text="#{book.room.text}">Book room</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

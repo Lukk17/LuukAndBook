@@ -35,13 +35,6 @@ public class User
     private String password;
 
     private boolean enabled;
-    
-    private String photoPath;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-               inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
 
     @NotBlank
     private String name;
@@ -49,56 +42,24 @@ public class User
     @NotBlank
     private String surname;
 
+    private String photoPath;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
     @OneToMany
     private List<Offer> offers;
-    
+
     @OneToMany
     private List<Message> receivedMessage;
-    
+
     @OneToMany
     private List<Message> sentMessage;
 
-    
-    
-    public List<Message> getReceivedMessage()
-    {
-        return receivedMessage;
-    }
-
-    public void setReceivedMessage(List<Message> receivedMessage)
-    {
-        this.receivedMessage = receivedMessage;
-    }
-
-    public List<Message> getSentMessage()
-    {
-        return sentMessage;
-    }
-
-    public void setSentMessage(List<Message> sentMessage)
-    {
-        this.sentMessage = sentMessage;
-    }
-
-    public String getPhotoPath()
-    {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath)
-    {
-        this.photoPath = photoPath;
-    }
-
-    public List<Offer> getOffers()
-    {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers)
-    {
-        this.offers = offers;
-    }
+    @OneToMany
+    private List<BookedDate> bookedDates;
 
     public Long getId()
     {
@@ -130,7 +91,7 @@ public class User
         this.password = password;
     }
 
-    public boolean getEnabled()
+    public boolean isEnabled()
     {
         return enabled;
     }
@@ -138,16 +99,6 @@ public class User
     public void setEnabled(boolean enabled)
     {
         this.enabled = enabled;
-    }
-
-    public List<Role> getRoles()
-    {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles)
-    {
-        this.roles = roles;
     }
 
     public String getName()
@@ -170,13 +121,63 @@ public class User
         this.surname = surname;
     }
 
-    public List<Offer> getOfferts()
+    public String getPhotoPath()
+    {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath)
+    {
+        this.photoPath = photoPath;
+    }
+
+    public List<Role> getRoles()
+    {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles)
+    {
+        this.roles = roles;
+    }
+
+    public List<Offer> getOffers()
     {
         return offers;
     }
 
-    public void setOfferts(List<Offer> offerts)
+    public void setOffers(List<Offer> offers)
     {
-        this.offers = offerts;
+        this.offers = offers;
+    }
+
+    public List<Message> getReceivedMessage()
+    {
+        return receivedMessage;
+    }
+
+    public void setReceivedMessage(List<Message> receivedMessage)
+    {
+        this.receivedMessage = receivedMessage;
+    }
+
+    public List<Message> getSentMessage()
+    {
+        return sentMessage;
+    }
+
+    public void setSentMessage(List<Message> sentMessage)
+    {
+        this.sentMessage = sentMessage;
+    }
+
+    public List<BookedDate> getBookedDates()
+    {
+        return bookedDates;
+    }
+
+    public void setBookedDates(List<BookedDate> bookedDates)
+    {
+        this.bookedDates = bookedDates;
     }
 }

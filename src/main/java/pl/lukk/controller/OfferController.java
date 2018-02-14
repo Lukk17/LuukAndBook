@@ -143,7 +143,7 @@ public class OfferController
     @GetMapping("/user/list")
     public String userList(Model model, Authentication auth)
     {
-        List<Offer> offers = offerService.findByUserId(auth.getName());
+        List<Offer> offers = offerService.findByBookedDatesUser(auth.getName());
         model.addAttribute("offerList", offers);
 
         return "views/offer/userOffersList";

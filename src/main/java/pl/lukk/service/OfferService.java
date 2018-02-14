@@ -23,4 +23,6 @@ public interface OfferService
 
     List<Offer> search(Offer offer);
 
+    List<Offer> findByBookedDatesUser(String email);
+
 }

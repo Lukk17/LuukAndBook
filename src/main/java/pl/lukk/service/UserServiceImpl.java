@@ -85,12 +85,12 @@ public class UserServiceImpl implements UserService
             databaseUser.setSurname(userChanges.getSurname());
         }
 
-        if (userChanges.getOfferts() != null)
+        if (userChanges.getOffers() != null)
         {
-            databaseUser.setOfferts(userChanges.getOfferts());
+            databaseUser.setOffers(userChanges.getOffers());
         }
 
-        databaseUser.setEnabled(userChanges.getEnabled());
+        databaseUser.setEnabled(userChanges.isEnabled());
 
         userRepository.save(databaseUser);
 
@@ -122,12 +122,12 @@ public class UserServiceImpl implements UserService
             databaseUser.setId(userChanges.getId());
         }
 
-        if (userChanges.getOfferts() != null)
+        if (userChanges.getOffers() != null)
         {
-            databaseUser.setOfferts(userChanges.getOfferts());
+            databaseUser.setOffers(userChanges.getOffers());
         }
 
-        databaseUser.setEnabled(userChanges.getEnabled());
+        databaseUser.setEnabled(userChanges.isEnabled());
 
         userRepository.save(databaseUser);
 

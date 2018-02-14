@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,13 +25,15 @@ public class Offer
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_owner")
-    private User owner;
-
     @NotBlank
     @Size(max = 100)
     private String hotelName;
+
+    @NotBlank
+    private String country;
+
+    @NotBlank
+    private String city;
 
     @NotBlank
     private String roomNumber;
@@ -46,34 +49,25 @@ public class Offer
     @Size(max = 3000)
     private String description;
 
-    private boolean      promoted;
-    
+    @Size(max = 500)
+    private String comment;
+
+    private boolean promoted;
+
+    @ManyToOne
+    @JoinColumn(name = "offer_owner")
+    private User owner;
+
     @Column
-    @ElementCollection(targetClass=String.class)
+    @ElementCollection(targetClass = String.class)
     private List<String> photoPaths;
 
     @ManyToOne
     @JoinColumn(name = "offer_user")
     private User user;
 
-    @Size(max = 500)
-    private String comment;
-
-    @NotBlank
-    private String country;
-
-    @NotBlank
-    private String city;
-
-    public List<String> getPhotoPaths()
-    {
-        return photoPaths;
-    }
-
-    public void setPhotoPaths(List<String> photoPaths)
-    {
-        this.photoPaths = photoPaths;
-    }
+    @OneToMany
+    private List<BookedDate> bookedDates;
 
     public Long getId()
     {
@@ -85,16 +79,6 @@ public class Offer
         this.id = id;
     }
 
-    public User getOwner()
-    {
-        return owner;
-    }
-
-    public void setOwner(User owner)
-    {
-        this.owner = owner;
-    }
-
     public String getHotelName()
     {
         return hotelName;
@@ -103,6 +87,26 @@ public class Offer
     public void setHotelName(String hotelName)
     {
         this.hotelName = hotelName;
+    }
+
+    public String getCountry()
+    {
+        return country;
+    }
+
+    public void setCountry(String country)
+    {
+        this.country = country;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
     }
 
     public String getRoomNumber()
@@ -145,6 +149,16 @@ public class Offer
         this.description = description;
     }
 
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
+    }
+
     public boolean isPromoted()
     {
         return promoted;
@@ -153,6 +167,26 @@ public class Offer
     public void setPromoted(boolean promoted)
     {
         this.promoted = promoted;
+    }
+
+    public User getOwner()
+    {
+        return owner;
+    }
+
+    public void setOwner(User owner)
+    {
+        this.owner = owner;
+    }
+
+    public List<String> getPhotoPaths()
+    {
+        return photoPaths;
+    }
+
+    public void setPhotoPaths(List<String> photoPaths)
+    {
+        this.photoPaths = photoPaths;
     }
 
     public User getUser()
@@ -165,33 +199,13 @@ public class Offer
         this.user = user;
     }
 
-    public String getComment()
+    public List<BookedDate> getBookedDates()
     {
-        return comment;
+        return bookedDates;
     }
 
-    public void setComment(String comment)
+    public void setBookedDates(List<BookedDate> bookedDates)
     {
-        this.comment = comment;
-    }
-
-    public String getCountry()
-    {
-        return country;
-    }
-
-    public void setCountry(String country)
-    {
-        this.country = country;
-    }
-
-    public String getCity()
-    {
-        return city;
-    }
-
-    public void setCity(String city)
-    {
-        this.city = city;
+        this.bookedDates = bookedDates;
     }
 }

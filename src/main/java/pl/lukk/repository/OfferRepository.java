@@ -3,6 +3,7 @@ package pl.lukk.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import pl.lukk.entity.Offer;
@@ -22,4 +23,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long>
     List<Offer> findByHotelName(String hotelName);
     
     List<Offer> findByRoomCapacity(Long roomCapacity);
+    
+    @Query("select o from offer o "
+            + "join o.bookedDates bd "
+            + "where bd.user = :user ")
+    List<Offer> findByBookedDatesUser(User user);
 }

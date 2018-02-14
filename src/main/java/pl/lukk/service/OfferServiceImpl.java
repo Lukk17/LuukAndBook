@@ -182,6 +182,14 @@ public class OfferServiceImpl implements OfferService
     {
         return offerRepo.findOne(id);
     }
+    
+    @Override
+    public List<Offer> findByBookedDatesUser(String email)
+    {
+        User user = userRepo.findByEmail(email);
+        return offerRepo.findByBookedDatesUser(user);
+    }
+    
 
     @Override
     public List<Offer> findByUserId(String userEmail)
