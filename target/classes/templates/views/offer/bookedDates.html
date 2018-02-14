@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8"/>
+<title th:text="#{booked.dates.text}">Booked dates</title>
+</head>
+<section layout:fragment="content">
+
+<div class="x_panel" style="padding-left: 5%;padding-right: 5%;">
+		<div class="x_title">
+			<h2 th:text="#{booked.dates.text}"></h2>
+			<div class="clearfix"></div>
+		</div>
+	<table id="datatable" class="table table-striped table-bordered">
+		<tr th:each="date : ${dates}">
+			<td th:text="${date.bookedDate}"></td>
+		</tr>
+	</table>
+	</div>
+	
+</section>
+</html>

@@ -24,8 +24,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long>
     
     List<Offer> findByRoomCapacity(Long roomCapacity);
     
-    @Query("select o from offer o "
-            + "join o.bookedDates bd "
-            + "where bd.user = :user ")
+    @Query("select o from offer o join o.bookedDates bd where bd.user = ?1")
     List<Offer> findByBookedDatesUser(User user);
 }

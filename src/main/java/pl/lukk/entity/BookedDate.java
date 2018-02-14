@@ -1,5 +1,6 @@
 package pl.lukk.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -16,14 +17,14 @@ public class BookedDate
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private LocalDateTime bookedDate;
+    private LocalDate bookedDate;
 
     @ManyToOne
-    @JoinColumn(name = "bookedDate_offer")
+    @JoinColumn(name="offer")
     private Offer offer;
     
     @ManyToOne
-    @JoinColumn(name = "bookedDate_user")
+    @JoinColumn(name="user")
     private User user;
 
     public Long getId()
@@ -36,12 +37,12 @@ public class BookedDate
         this.id = id;
     }
 
-    public LocalDateTime getBookedDate()
+    public LocalDate getBookedDate()
     {
         return bookedDate;
     }
 
-    public void setBookedDate(LocalDateTime bookedDate)
+    public void setBookedDate(LocalDate bookedDate)
     {
         this.bookedDate = bookedDate;
     }

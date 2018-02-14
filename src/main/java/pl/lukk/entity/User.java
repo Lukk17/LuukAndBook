@@ -58,7 +58,7 @@ public class User
     @OneToMany
     private List<Message> sentMessage;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     private List<BookedDate> bookedDates;
 
     public Long getId()

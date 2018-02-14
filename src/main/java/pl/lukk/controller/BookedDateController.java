@@ -45,7 +45,15 @@ public class BookedDateController
     public String datesList(@RequestParam("date") List<String> dateToBookList, @RequestParam("id") Long offerId, Authentication auth)
     {
         bookedService.bookDates(dateToBookList, offerId, auth.getName());
-        return "redirect:offer/user/list";
+        return "redirect:/offer/user/list";
+    }
+    
+    @GetMapping("/owner/{id}/booked")
+    public String bookedDates(@PathVariable(value = "id") Long offerId, Model model)
+    {
+        model.addAttribute("dates", bookedService.findAllBookedDatesByOffer(offerId));
+        ;
+        return "views/offer/bookedDates";
     }
     
     @ModelAttribute

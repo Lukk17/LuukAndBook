@@ -45,8 +45,13 @@
 						<td><a class="btn btn-primary btn-xs"
 							th:href="@{/offer/owner/{id}/edit(id=${offer.id})}"
 							th:text="#{edit.text}"> <i class="fa fa-folder"></i> Edit
-								User
-						</a> <a class="btn btn-primary btn-xs"
+								offer
+						</a>
+						<a class="btn btn-primary btn-xs"
+							th:href="@{/booking/owner/{id}/booked(id=${offer.id})}"
+							th:text="#{booked.dates.text}"> <i class="fa fa-folder"></i> Booked days
+						</a>
+						 <a class="btn btn-primary btn-xs"
 							th:href="@{/offer/owner/{id}/remove(id=${offer.id})}"
 							th:text="#{remove.text}"> <i class="fa fa-folder"></i> Remove
 								User

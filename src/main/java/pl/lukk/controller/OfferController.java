@@ -150,9 +150,9 @@ public class OfferController
     }
     
     @GetMapping("/user/{id}/details")
-    public String userDetails(Model model, @PathVariable(value = "id") Long offerId, Authentication auth)
+    public String userDetails(Model model, @PathVariable(value = "id") Long offerId)
     {
-        Offer offer = offerService.findByUserAndId(auth.getName(), offerId);
+        Offer offer = offerService.findOneById(offerId);
         model.addAttribute("offer", offer);
 
         return "views/offer/userOffersDetails";
@@ -172,67 +172,6 @@ public class OfferController
         model.addAttribute("offerList", offerService.search(offer));
         return "views/offer/userOffersList";
     }
-
-    //    @GetMapping("/{id}/details")
-    //    public String list(Model model, @PathVariable(value = "id") Long id)
-    //    {
-    //        List<LocalDateTime> availableDates = availabilityService.findAvailableDatesByOffersId(id);
-    //        Collections.sort(availableDates);                                                                               // sort by year
-    //
-    //        model.addAttribute("availableDates", availableDates);
-
-    //        
-    //        
-    //        
-    //        LocalDateTime now = LocalDateTime.now();
-    //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    //        List<Integer> mon1 = new ArrayList<>();
-    //
-    //        List<Integer> days = new ArrayList<>();
-    //        List<Integer> month = new ArrayList<>();
-    //        List<Integer> year = new ArrayList<>();
-    //
-    //        List<LocalDateTime> m1 = new ArrayList<>();
-    //        List<LocalDateTime> m2 = new ArrayList<>();
-    //        List<LocalDateTime> m3 = new ArrayList<>();
-    //        List<LocalDateTime> m4 = new ArrayList<>();
-    //        List<LocalDateTime> m5 = new ArrayList<>();
-    //        List<LocalDateTime> m6 = new ArrayList<>();
-    //        List<LocalDateTime> m7 = new ArrayList<>();
-    //        List<LocalDateTime> m8 = new ArrayList<>();
-    //        List<LocalDateTime> m9 = new ArrayList<>();
-    //        List<LocalDateTime> m10 = new ArrayList<>();
-    //        List<LocalDateTime> m11 = new ArrayList<>();
-    //        List<LocalDateTime> m12 = new ArrayList<>();
-    //
-    //       
-    //
-    //        for (LocalDateTime t : availableDates)
-    //        {
-    //days.add(t.getDayOfYear());
-    //            days.add(t.getDayOfMonth());
-    //            month.add(t.getMonthValue());
-    //            year.add(t.getYear());
-    //            if (t.getMonthValue() == 1)
-    //            {
-    //                m1.add(LocalDateTime.of(t.getYear(), t.getMonthValue(), t.getDayOfMonth(), t.getHour(), t.getMinute()));
-    //                if (!mon1.contains(t.getYear()))
-    //                {
-    //                    mon1.add(t.getYear());                              // add year only once at beggining
-    //                }
-    //                if(!mon1.contains(t.getMonthValue()))
-    //                {
-    //                    mon1.add(t.getMonthValue());                        // add month only once at beggining of months days
-    //                }
-    //                mon1.add(t.getDayOfMonth());                            // save available days in january
-    //            }
-    //
-    //        }
-    //
-    //        model.addAttribute("january", mon1);                            // list have first entry which is year and then free days
-    //
-    //        return "views/offer/details";
-    //    }
 
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)

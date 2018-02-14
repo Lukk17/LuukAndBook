@@ -38,8 +38,13 @@
 						<td th:text="${offer.price}">Price</td>
 						<td th:text="${offer.description}">Description</td>
 						<td th:text="${offer.comment}">Comment</td>
-						<td><a class="btn btn-primary btn-xs"
-							th:href="@{/mesage/{id}/send(email=${offer.owner.id})}"
+						<td>
+						<a class="btn btn-primary btn-xs"
+							th:href="@{/booking/{id}/dates(id=${offer.id})}"
+							th:text="#{book.text}"> <i class="fa fa-folder"></i> Book
+						</a> 
+						<a class="btn btn-primary btn-xs"
+							th:href="@{/mesage/{id}/send(id=${offer.owner.id})}"
 							th:text="#{message.send.text}"> <i class="fa fa-folder"></i> Send message
 						</a> 
 						

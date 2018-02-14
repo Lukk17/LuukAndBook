@@ -66,7 +66,7 @@ public class Offer
     @JoinColumn(name = "offer_user")
     private User user;
 
-    @OneToMany
+    @OneToMany(mappedBy="offer")
     private List<BookedDate> bookedDates;
 
     public Long getId()
