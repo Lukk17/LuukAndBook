@@ -2,6 +2,9 @@ package pl.lukk.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import pl.lukk.entity.Offer;
 import pl.lukk.entity.User;
 
@@ -24,5 +27,7 @@ public interface OfferService
     List<Offer> search(Offer offer);
 
     List<Offer> findByBookedDatesUser(String email);
+
+    Page<Offer> findALL(Pageable pageable);
 
 }

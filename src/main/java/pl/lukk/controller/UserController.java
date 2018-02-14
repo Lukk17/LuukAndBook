@@ -83,13 +83,6 @@ public class UserController
         }
     }
 
-    @GetMapping("/list")
-    public String list(Model model, @SortDefault("id") Pageable pageable)
-    {
-        model.addAttribute("page", userService.findAll(pageable));
-        return "views/user/list";
-    }
-
     @GetMapping("/changePhoto")
     public String photoChange()
     {

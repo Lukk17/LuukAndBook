@@ -28,16 +28,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-        .antMatchers("/admin").hasRole("ADMIN")
-        .antMatchers("/user").hasAnyRole("USER","ADMIN")
-        .antMatchers("/group").authenticated()
+        .antMatchers("/").permitAll()
+        .antMatchers("/index").permitAll()
         .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/admin").hasRole("ADMIN")
+        .antMatchers("/user").authenticated()
+        .antMatchers("/user/**").authenticated()
+        .antMatchers("/message/**").authenticated()
+        .antMatchers("/booking/offer/book").authenticated()
+        .antMatchers("/booking/owner/**").hasAnyRole("ADMIN","OWNER")
+        .antMatchers("/offer/owner/**").hasAnyRole("ADMIN","USER", "GROUP-MANAGER")
+        .antMatchers("/offer/user/**").hasAnyRole("ADMIN","USER", "GROUP-MANAGER")
     
         .and().formLogin().loginPage("/login")                      //  login page
         .failureUrl("/login?error=true")                            //  adress for error login
     
         .and().exceptionHandling().accessDeniedPage("/403")         // when user have no authorization on page
-        .and().logout()
+        .and().logout().logoutUrl("/index")
         .permitAll();
     }
     

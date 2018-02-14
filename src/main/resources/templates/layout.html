@@ -102,7 +102,7 @@
 
 
 			<!-- NOTIFICATION dropdown start-->
-			<div sec:authorize="hasRole('ROLE_USER')">
+			<div sec:authorize="authenticated" >
 				<div class="top-nav notification-row">
 
 					<ul class="nav pull-right top-menu">
@@ -226,7 +226,7 @@
 								</li>
 
 
-								<li th:each="msg : ${topMessages}"><a href="#"> <span
+								<li th:each="msg : ${topMessages}"><a th:href="@{/message//{id}/receiverDetails(id=${msg.id})}"> <span
 										class="photo"> <img
 											th:src="@{|~/${msg.permaSender.photoPath}|}" /></span> <span
 										class="subject"> <span class="from"

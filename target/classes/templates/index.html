@@ -9,15 +9,56 @@
 </head>
 <section layout:fragment="content">
 <div style="padding-left: 30%;">
-	Main page <br />
-	<p sec:authorize="isAuthenticated()"></p>
-	<p>
-		Logged as: <span sec:authentication="name"></span>
-	</p>
 	<p>
 		Role: <span sec:authentication="authorities"></span>
 	</p>
 	</div>
+	<br/>
+	<div class="x_panel" style="padding-left: 10%;padding-right: 5%;">
+			<div class="x_title">
+				<h2 th:text="#{offer.list.text}"></h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table id="datatable" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+						<th><a class="sorted" sd:pagination-sort="hotelName"
+							th:text="#{hotelName.text}"></a></th>
+							<th><a class="sorted" sd:pagination-sort="city"
+							th:text="#{city.text}"></a></th>
+							<th><a class="sorted" sd:pagination-sort="country"
+							th:text="#{country.text}"></a></th>
+							<th><a class="sorted" sd:pagination-sort="roomCapacity"
+							th:text="#{roomCapacity.text}"></a></th>
+							<th><a class="sorted" sd:pagination-sort="price"
+							th:text="#{price.text}"></a></th>
+							<th><a class="sorted" sd:pagination-sort="owner"
+							th:text="#{owner.text}"></a></th>
+						<th th:text="#{details.text}">Details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="offer : ${offerList}">
+							<td th:text="${offer.hotelName}"></td>
+							<td th:text="${offer.city}"></td>
+							<td th:text="${offer.country}"></td>
+							<td th:text="${offer.roomCapacity}"></td>
+							<td th:text="${offer.price}"></td>
+							<td th:text="${offer.owner.email}"></td>
+	
+							<td><a class="btn btn-primary btn-xs"
+								th:href="@{/offer/user/{id}/details(id=${offer.id})}"
+								th:text="#{details.text}"> <i class="fa fa-folder"></i>
+									Details
+							</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
 
 </section>
 </html>
