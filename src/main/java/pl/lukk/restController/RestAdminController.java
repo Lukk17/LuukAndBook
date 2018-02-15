@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,8 +63,8 @@ public class RestAdminController
     }
 
     @PutMapping("/userEdit")
-    public ResponseEntity edit(User formUser)
-    {
+    public ResponseEntity edit(@RequestBody User formUser)
+    {   
         userService.adminEditUser(formUser);
 
         return ResponseEntity.accepted().build();
@@ -81,7 +82,7 @@ public class RestAdminController
             @RequestParam(value = "ROLE_OWNER", required = false) Long owner,
             @RequestParam(value = "ROLE_ADMIN", required = false) Long admin,
             @RequestParam(value = "ROLE_GROUP-MANAGER", required = false) Long groupManager,
-            @RequestParam(value = "id", required = false) Long userId)
+            @RequestParam(value = "id", required = true) Long userId)
     {
         List<Long> rolesId = new ArrayList<>();
         rolesId.add(user);
@@ -109,7 +110,7 @@ public class RestAdminController
     }
 
     @PutMapping("/offer/edit")
-    public ResponseEntity offerEdit(@Valid Offer formOffer, BindingResult bresult)
+    public ResponseEntity offerEdit(@Valid @RequestBody Offer formOffer, BindingResult bresult)
     {
         if (bresult.hasErrors())
         {

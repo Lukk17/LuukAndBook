@@ -73,8 +73,7 @@ public class UserServiceImpl implements UserService
     public void saveEditUser(String email, User userChanges)
     {
         User databaseUser = userRepository.findByEmail(email);
-        
-        
+
         if (userChanges.getName() != null)
         {
             databaseUser.setName(userChanges.getName());
@@ -93,15 +92,14 @@ public class UserServiceImpl implements UserService
         databaseUser.setEnabled(userChanges.isEnabled());
 
         userRepository.save(databaseUser);
-
     }
-    
+
     @Override
     public void adminEditUser(User userChanges)
     {
         User databaseUser = userRepository.findByEmail(userChanges.getEmail());
         
-        
+
         if (userChanges.getName() != null)
         {
             databaseUser.setName(userChanges.getName());
@@ -126,9 +124,10 @@ public class UserServiceImpl implements UserService
         {
             databaseUser.setOffers(userChanges.getOffers());
         }
-
-        databaseUser.setEnabled(userChanges.isEnabled());
-
+        if (userChanges.getOffers() != null)
+        {
+            databaseUser.setEnabled(userChanges.isEnabled());
+        }
         userRepository.save(databaseUser);
 
     }
