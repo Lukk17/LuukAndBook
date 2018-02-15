@@ -30,4 +30,13 @@ public interface OfferService
 
     Page<Offer> findALL(Pageable pageable);
 
+    Integer userOfferNum(String userEmail);
+
+    Integer ownerOfferNum(String ownerEmail);
+
+
+    List<Offer> findTop5ByUser(String userEmail);
+
+    List<Offer> findTop5ByOwner(String ownerEmail);
+
 }

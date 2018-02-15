@@ -65,6 +65,10 @@ public class HomeController
             model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
             model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
+            model.addAttribute("topUserOffer", offerService.findTop5ByUser(auth.getName()));
+            model.addAttribute("userOfferNum", offerService.userOfferNum(auth.getName()));
+            model.addAttribute("topOwnerOffer", offerService.findTop5ByOwner(auth.getName()));
+            model.addAttribute("ownerOfferNum", offerService.ownerOfferNum(auth.getName()));
         }
         catch (NullPointerException e)
         {

@@ -14,7 +14,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long>
 {
     Offer findByOwnerAndId(User owner, Long id);
 
-    List<Offer> findByOwnerId(Long Id);
+    List<Offer> findByOwnerId(Long id);
     
     List<Offer> findByCountry(String country);
     
@@ -26,4 +26,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long>
     
     @Query("select o from offer o join o.bookedDates bd where bd.user = ?1")
     List<Offer> findByBookedDatesUser(User user);
+    
+    List<Offer> findByOwnerEmail(String email);
+    
+    List<Offer> findByUserEmail(String email);
+        
+    List<Offer> findTop5ByOwner(User owner);
 }

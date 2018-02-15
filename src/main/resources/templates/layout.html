@@ -68,7 +68,7 @@
 			 
 			<a href="index.html" class="logo" style="margin-left: 15%; width: 40%; "> 
 			<span sec:authorize="hasRole('ROLE_USER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span>  
-			<span class="lite">Began adventure of </span> lifetime!
+			<span class="lite">Began adventure of a </span> lifetime!
 			</a>
 
 
@@ -119,98 +119,6 @@
           |
           | -->
 
-						<!-- TASK notificatoin start -->
-
-						<li id="task_notificatoin_bar" class="dropdown"><a
-							data-toggle="dropdown" class="dropdown-toggle" href="#"> <i
-								class="icon-task-l"></i> <span class="badge bg-important">6</span>
-						</a>
-							<ul class="dropdown-menu extended tasks-bar">
-								<div class="notify-arrow notify-arrow-blue"></div>
-								<li>
-									<p class="blue">You have 6 pending letter</p>
-								</li>
-								<li><a href="#">
-										<div class="task-info">
-											<div class="desc">Design PSD</div>
-											<div class="percent">90%</div>
-										</div>
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-success"
-												role="progressbar" aria-valuenow="90" aria-valuemin="0"
-												aria-valuemax="100" style="width: 90%">
-												<span class="sr-only">90% Complete (success)</span>
-											</div>
-										</div>
-								</a></li>
-								<li><a href="#">
-										<div class="task-info">
-											<div class="desc">Project 1</div>
-											<div class="percent">30%</div>
-										</div>
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-warning"
-												role="progressbar" aria-valuenow="30" aria-valuemin="0"
-												aria-valuemax="100" style="width: 30%">
-												<span class="sr-only">30% Complete (warning)</span>
-											</div>
-										</div>
-								</a></li>
-								<li><a href="#">
-										<div class="task-info">
-											<div class="desc">Digital Marketing</div>
-											<div class="percent">80%</div>
-										</div>
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-info"
-												role="progressbar" aria-valuenow="80" aria-valuemin="0"
-												aria-valuemax="100" style="width: 80%">
-												<span class="sr-only">80% Complete</span>
-											</div>
-										</div>
-								</a></li>
-								<li><a href="#">
-										<div class="task-info">
-											<div class="desc">Logo Designing</div>
-											<div class="percent">78%</div>
-										</div>
-										<div class="progress progress-striped">
-											<div class="progress-bar progress-bar-danger"
-												role="progressbar" aria-valuenow="78" aria-valuemin="0"
-												aria-valuemax="100" style="width: 78%">
-												<span class="sr-only">78% Complete (danger)</span>
-											</div>
-										</div>
-								</a></li>
-								<li><a href="#">
-										<div class="task-info">
-											<div class="desc">Mobile App</div>
-											<div class="percent">50%</div>
-										</div>
-
-										<div class="progress progress-striped active">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
-												style="width: 50%">
-												<span class="sr-only">50% Complete</span>
-											</div>
-										</div>
-
-								</a></li>
-								<li class="external"><a href="#">See All Tasks</a></li>
-							</ul></li>
-						<!-- TASK notificatoin end -->
-
-						<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          | -->
 
 						<!-- MAIL inbox notificatoin start-->
 
@@ -245,10 +153,18 @@
 						<!-- 
           |
           |
+          |<li th:each="offer : ${topOffer}"><a th:href="@{/offer/user/{id}/details(id=${offer.id})}"> <span
+										class="photo"> <img
+											th:src="@{|~/${msg.permaSender.photoPath}|}" /></span> <span
+										class="subject"> <span class="from"
+											th:text="${msg.permaSender.email}">Sender</span>
+
+									</span> <span class="message" th:text="${msg.text}"> Message
+											text </span>
+								</a></li>
           |
           |
-          |
-          |
+          |class="icon_book_alt"
           |
           |
           | -->
@@ -257,31 +173,39 @@
 
 						<!-- ALERT notification start-->
 
-						<li id="alert_notificatoin_bar" class="dropdown"><a
+						<li id="alert_notificatoin_bar" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a
 							data-toggle="dropdown" class="dropdown-toggle" href="#"> <i
-								class="icon-bell-l"></i> <span class="badge bg-important">7</span>
+								class="icon-bell-l"></i> <span class="badge bg-important" th:text="${userOfferNum}">Offers number</span>
 						</a>
 							<ul class="dropdown-menu extended notification">
 								<li>
-									<p class="blue">You have 4 new notifications</p>
+									<p class="blue" th:text="#{offer.text}">Offers</p>
 								</li>
-								<li><a href="#"> <span class="label label-primary"><i
-											class="icon_profile"></i></span> Friend Request <span
-										class="small italic pull-right">5 mins</span>
+								<li th:each="offer : ${topUserOffer}"><a th:href="@{/offer/user/{id}/details(id=${offer.id})}"> <span class="label label-success" >  <i
+										class="icon_book_alt"> </i></span><span th:text="| Hotel: ${offer.hotelName}|" Style="margin:3%"> Hotel Name</span><br/>
+										<span
+										class="small italic pull-right" th:text="|Room number: ${offer.roomNumber}|"> Room number</span>
+
 								</a></li>
-								<li><a href="#"> <span class="label label-warning"><i
-											class="icon_pin"></i></span> John location. <span
-										class="small italic pull-right">50 mins</span>
+								<li><a th:href="@{/offer/user/list}" th:text="#{see.all.text}">See all</a></li>
+							</ul></li>
+							
+							
+							<li id="alert_notificatoin_bar" class="dropdown" sec:authorize="hasRole('ROLE_OWNER')"><a
+							data-toggle="dropdown" class="dropdown-toggle" href="#"> <i
+								class="icon-bell-l"></i> <span class="badge bg-important" th:text="${ownerOfferNum}">Offers number</span>
+						</a>
+							<ul class="dropdown-menu extended notification">
+								<li>
+									<p class="blue" th:text="#{offer.text}">Offers</p>
+								</li>
+								<li th:each="offer : ${topOwnerOffer}"><a th:href="@{/offer/owner/{id}/details(id=${offer.id})}"> <span class="label label-success" >  <i
+										class="icon_book_alt"> </i></span><span th:text="| Hotel: ${offer.hotelName}|" Style="margin:3%"> Hotel Name</span><br/>
+										<span
+										class="small italic pull-right" th:text="|Room number: ${offer.roomNumber}|"> Room number</span>
+
 								</a></li>
-								<li><a href="#"> <span class="label label-danger"><i
-											class="icon_book_alt"></i></span> Project 3 Completed. <span
-										class="small italic pull-right">1 hr</span>
-								</a></li>
-								<li><a href="#"> <span class="label label-success"><i
-											class="icon_like"></i></span> Mick appreciated your work. <span
-										class="small italic pull-right"> Today</span>
-								</a></li>
-								<li><a href="#">See all notifications</a></li>
+								<li><a th:href="@{/offer/owner/list}" th:text="#{see.all.text}">See all</a></li>
 							</ul></li>
 
 						<!-- ALERT notification end-->
@@ -485,111 +409,14 @@
           |
           |
           |
-          |
-          |
-          |
-          |
-          |
-          | -->
-
-
-
-					<li class="sub-menu"><a href="javascript:;" class=""> <i
-							class="icon_desktop"></i> <span>UI Fitures</span> <span
-							class="menu-arrow arrow_carrot-right"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="general.html">Elements</a></li>
-							<li><a class="" href="buttons.html">Buttons</a></li>
-							<li><a class="" href="grids.html">Grids</a></li>
-						</ul></li>
-
-					<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
+          |class="icon_desktop"
+          |class="icon_piechart"
+          |class="icon_table"
+          |class="icon_documents_alt"
           |
           | -->
 
 
-					<li><a class="" href="widgets.html"> <i
-							class="icon_piechart"></i> <span>Widgets</span>
-					</a></li>
-
-					<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          | -->
-
-
-
-
-					<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          | -->
-
-
-
-					<li class="sub-menu"><a href="javascript:;" class=""> <i
-							class="icon_table"></i> <span>Tables</span> <span
-							class="menu-arrow arrow_carrot-right"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="basic_table.html">Basic Table</a></li>
-						</ul></li>
-
-
-					<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          | -->
-
-
-					<li class="sub-menu"><a href="javascript:;" class=""> <i
-							class="icon_documents_alt"></i> <span>Pages</span> <span
-							class="menu-arrow arrow_carrot-right"></span>
-					</a>
-						<ul class="sub">
-							<li><a class="" href="profile.html">Profile</a></li>
-							<li><a class="" href="login.html"><span>Login
-										Page</span></a></li>
-							<li><a class="" href="blank.html">Blank Page</a></li>
-							<li><a class="" href="404.html">404 Error</a></li>
-						</ul></li>
-
-					<!-- 
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          |
-          | -->
 
 				</ul>
 				<!-- MENU sidebar end-->

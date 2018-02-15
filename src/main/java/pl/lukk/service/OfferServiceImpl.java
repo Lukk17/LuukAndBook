@@ -169,7 +169,32 @@ public class OfferServiceImpl implements OfferService
         return offer -> true;
     }
     
+    @Override
+    public Integer userOfferNum(String userEmail)
+    {
+        return offerRepo.findByBookedDatesUser(userRepo.findByEmail(userEmail)).size();
+    }
     
+    @Override
+    public Integer ownerOfferNum(String ownerEmail)
+    {
+        return offerRepo.findByOwnerEmail(ownerEmail).size();
+    }
+    
+    @Override
+    public List<Offer> findTop5ByUser(String userEmail)
+    {
+        return offerRepo.findByBookedDatesUser(userRepo.findByEmail(userEmail))
+                .stream()
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<Offer> findTop5ByOwner(String userEmail)
+    {
+        return offerRepo.findTop5ByOwner(userRepo.findByEmail(userEmail));
+    }
 
     @Override
     public Offer findByUserAndId(String ownerEmail, Long id)
