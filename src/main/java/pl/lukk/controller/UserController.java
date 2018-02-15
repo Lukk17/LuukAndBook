@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import pl.lukk.entity.User;
 import pl.lukk.service.MessageService;
+import pl.lukk.service.OfferService;
 import pl.lukk.service.UserService;
 
 @Controller
@@ -29,6 +30,9 @@ public class UserController
 
     @Autowired
     MessageService messageService;
+    
+    @Autowired
+    OfferService offerService;
 
     @GetMapping
     public String user(Authentication auth, Model model)
@@ -106,6 +110,10 @@ public class UserController
             model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
             model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
+            model.addAttribute("topUserOffer", offerService.findTop5ByUser(auth.getName()));
+            model.addAttribute("userOfferNum", offerService.userOfferNum(auth.getName()));
+            model.addAttribute("topOwnerOffer", offerService.findTop5ByOwner(auth.getName()));
+            model.addAttribute("ownerOfferNum", offerService.ownerOfferNum(auth.getName()));
         }
         catch (NullPointerException e)
         {

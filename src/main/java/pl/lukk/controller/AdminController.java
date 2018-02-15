@@ -3,12 +3,15 @@ package pl.lukk.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.lukk.entity.Offer;
 import pl.lukk.entity.Role;
 import pl.lukk.entity.User;
 import pl.lukk.service.MessageService;
+import pl.lukk.service.OfferService;
 import pl.lukk.service.RoleService;
 import pl.lukk.service.UserService;
 
@@ -34,13 +39,9 @@ public class AdminController
 
     @Autowired
     MessageService messageService;
-
-    @GetMapping("/panel")
-    public String panel()
-    {
-
-        return "views/admin/panel";
-    }
+    
+    @Autowired
+    OfferService offerService;
 
     @GetMapping("/userList")
     public String userList(Model model, @SortDefault("id") Pageable pageable)
@@ -51,11 +52,11 @@ public class AdminController
         return "views/admin/userList";
     }
     
-    @GetMapping("/userList")
+    @GetMapping("/offerList")
     public String offerList(Model model, @SortDefault("id") Pageable pageable)
     {
 
-        model.addAttribute("userList", userService.findAll(pageable));
+        model.addAttribute("offerList", offerService.findALL(pageable));
 
         return "views/admin/offerList";
     }
@@ -112,6 +113,29 @@ public class AdminController
 
         return "views/admin/roleChange";
     }
+    
+    @GetMapping("/offer/{id}/edit")
+    public String offerEdit(Model model, @PathVariable(value = "id") Long id)
+    {
+        model.addAttribute("offer", offerService.adminFindOfferById(id));
+
+        return "views/admin/offerEdit";
+    }
+
+    @PostMapping("/offer/edit")
+    public String offerEdit(@Valid Offer formOffer, BindingResult bresult)
+    {
+        if (bresult.hasErrors())
+        {
+            return "admin/offer/edit";
+        }
+        else
+        {
+
+            offerService.saveEditOffer(formOffer);
+            return "redirect:/admin/offerList";
+        }
+    }
 
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
@@ -122,6 +146,10 @@ public class AdminController
             model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
             model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
+            model.addAttribute("topUserOffer", offerService.findTop5ByUser(auth.getName()));
+            model.addAttribute("userOfferNum", offerService.userOfferNum(auth.getName()));
+            model.addAttribute("topOwnerOffer", offerService.findTop5ByOwner(auth.getName()));
+            model.addAttribute("ownerOfferNum", offerService.ownerOfferNum(auth.getName()));
         }
         catch (NullPointerException e)
         {

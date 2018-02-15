@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{offer.list.text}">Your offers list</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="x_panel" style="padding-left: 5%;">
+			<div class="x_title">
+				<h2 th:text="#{offer.list.text}"></h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table id="datatable" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th th:text="#{hotelName.text}"></th>
+							<th th:text="#{country.text}"></th>
+							<th th:text="#{city.text}"></th>
+							<th th:text="#{roomNumber.text}"></th>
+							<th th:text="#{price.text}"></th>
+							<th th:text="#{rentingUser.text}"></th>
+							<th th:text="#{promoted.text}"></th>
+							<td th:text="#{comment.text}">Comment</td>
+							<th th:text="#{action.text}">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="offer : ${offerList}">
+							<td th:text="${offer.hotelName}"></td>
+							<th th:text="${offer.country}"></th>
+							<th th:text="${offer.city}"></th>
+							<td th:text="${offer.roomNumber}"></td>
+							<td th:text="${offer.price}"></td>
+							<td th:if="${offer.user=null}" th:text="${offer.user.email}"></td>
+							<td th:until="${offer.user.email!=null}" th:text="#{lackOf.text}"></td>
+							<th th:text="${offer.promoted}"></th>
+							<td th:text="${offer.comment}">Comment</td>
+							<td> <a class="btn btn-primary btn-xs"
+								th:href="@{/offer/owner/{id}/remove(id=${offer.id})}"
+								th:text="#{remove.text}">Remove offer</a> <a
+								class="btn btn-primary btn-xs"
+								th:href="@{/admin/offer/{id}/edit(id=${offer.id})}"
+								th:text="#{edit.text}">Edit offer</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</section>
+</body>
+</html>

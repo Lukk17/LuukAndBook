@@ -201,6 +201,12 @@ public class OfferServiceImpl implements OfferService
     {
         return offerRepo.findByOwnerAndId(userRepo.findByEmail(ownerEmail), id);
     }
+    
+    @Override
+    public Offer adminFindOfferById(Long id)
+    {
+        return offerRepo.findOne(id);
+    }
 
     @Override
     public Offer findOneById(Long id)

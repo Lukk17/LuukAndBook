@@ -67,7 +67,8 @@
 
 			 
 			<a href="index.html" class="logo" style="margin-left: 15%; width: 40%; "> 
-			<span sec:authorize="hasRole('ROLE_USER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span>  
+			<span sec:authorize="hasRole('ROLE_USER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span> 
+			<span sec:authorize="hasRole('ROLE_MANAGER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span> 
 			<span class="lite">Began adventure of a </span> lifetime!
 			</a>
 
@@ -352,12 +353,17 @@
           |
           | -->
 
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a class=""
-						href="/admin/panel" th:href="@{/admin/panel}"> <i
-							class="icon_genius"></i> <span th:text="#{admin.panel.text}">Admin
-								Panel</span>
-
-					</a></li>
+					<li class="sub-menu" sec:authorize="hasRole('ROLE_ADMIN')"><a
+						href="javascript:;" class=""> <i class="icon_document_alt"></i>
+							<span th:text="#{admin.panel.text}">Admin
+								Panel</span> <span
+							class="menu-arrow arrow_carrot-right"></span>
+					</a>
+					<ul class="sub">
+							<li><a class="" th:href="@{/admin/userList}" th:text="#{userList.text}">Users list</a></li>
+							<li><a class="" th:href="@{/admin/offerList}" th:text="#{offerList.text}">Offers list</a></li>
+						</ul>
+					</li>
 
 					<!-- 
           |

@@ -20,6 +20,7 @@ import java.util.List;
 import pl.lukk.entity.User;
 import pl.lukk.service.BookedDateService;
 import pl.lukk.service.MessageService;
+import pl.lukk.service.OfferService;
 import pl.lukk.service.UserService;
 
 @Controller
@@ -34,6 +35,9 @@ public class BookedDateController
     
     @Autowired
     MessageService messageService;
+    
+    @Autowired
+    OfferService offerService;
     
     @GetMapping("/{id}/dates")
     public String datesList(@PathVariable(value = "id") Long offerId , Model model)
@@ -67,6 +71,10 @@ public class BookedDateController
             model.addAttribute("logedUser", logged);
             model.addAttribute("topMessages", messageService.findTop5ByOrderByCreated(logged));
             model.addAttribute("msgNum", messageService.unreadedNum(auth.getName()));
+            model.addAttribute("topUserOffer", offerService.findTop5ByUser(auth.getName()));
+            model.addAttribute("userOfferNum", offerService.userOfferNum(auth.getName()));
+            model.addAttribute("topOwnerOffer", offerService.findTop5ByOwner(auth.getName()));
+            model.addAttribute("ownerOfferNum", offerService.ownerOfferNum(auth.getName()));
         }
         catch (NullPointerException e)
         {

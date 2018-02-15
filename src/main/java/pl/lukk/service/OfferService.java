@@ -39,4 +39,6 @@ public interface OfferService
 
     List<Offer> findTop5ByOwner(String ownerEmail);
 
+    Offer adminFindOfferById(Long id);
+
 }
