@@ -1,5 +1,7 @@
 package pl.lukk.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
@@ -20,6 +22,8 @@ import pl.lukk.service.UserService;
 @Controller
 public class HomeController
 {
+    public static String logedSubscriverEmail;
+
     @Autowired
     UserService userService;
 
@@ -28,7 +32,7 @@ public class HomeController
 
     @Autowired
     MessageService messageService;
-    
+
     @Autowired
     OfferService offerService;
 
@@ -38,23 +42,32 @@ public class HomeController
         return "403";
     }
 
+    @GetMapping("/500")
+    public String serverError()
+    {
+        return "500";
+    }
+
     @RequestMapping(value =
     { "/login" }, method = RequestMethod.GET)
     public String login()
     {
-        
+
         return "login";
     }
 
     @GetMapping(
     { "/", "/index" })
-    public String home(Model model, @SortDefault("hotelName") Pageable pageable)
+    public String home(Model model, @SortDefault("hotelName") Pageable pageable, Authentication auth)
     {
+        if (auth!=null)
+        {
+            logedSubscriverEmail = auth.getName();
+        }
         model.addAttribute("offerList", offerService.findALL(pageable));
-        
+
         return "index";
     }
-
 
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)

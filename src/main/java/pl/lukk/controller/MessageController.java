@@ -1,5 +1,6 @@
 package pl.lukk.controller;
 
+import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,31 @@ public class MessageController
         model.addAttribute("msg", messageService.findOneById(auth.getName(), messageId));
 
         return "views/message/senderDetails";
+    }
+    
+    @GetMapping("/admin/publish")
+    public String publish(Model model)
+    {
+        Message msg = new Message();
+        model.addAttribute("msg", msg);
+
+        return "views/message/publish";
+    }
+    
+    @PostMapping("/admin/publish")
+    public String publish(Message message, Authentication auth)
+    {
+        try
+        {
+            messageService.publish(message.getText(), auth.getName());
+        }
+        catch (JMSException e)
+        {
+            
+            return "redirect:/500";
+        }
+        
+        return "redirect:/message/inbox";
     }
 
     @ModelAttribute

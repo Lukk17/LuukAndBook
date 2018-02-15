@@ -2,6 +2,8 @@ package pl.lukk.service;
 
 import java.util.List;
 
+import javax.jms.JMSException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,5 +30,9 @@ public interface MessageService
     void readed(Long messageId, String receiverEmail);
 
     Integer unreadedNum(String receiverEmail);
+
+    void publish(String message, String adminEmail) throws JMSException;
+
+    void getTopicMessage(String userEmail) throws JMSException;
 
 }
