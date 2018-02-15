@@ -1,13 +1,16 @@
 package pl.lukk.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pl.lukk.entity.BookedDate;
@@ -43,7 +46,7 @@ public class BookedDateServiceImpl implements BookedDateService
     }
 
     @Override
-    public List<String> findAvailableDatesByOffersId(Long offerId)
+    public Page<String> findAvailableDatesByOffersId(Long offerId)
     {
         List<BookedDate> bookedList = bookedRepo.findAllByOffer(offerRepo.findOne(offerId));
 
@@ -85,8 +88,8 @@ public class BookedDateServiceImpl implements BookedDateService
         {
             availableDates.add(t.format(FORMATTER));
         }
-
-        return availableDates;
+        
+        return new PageImpl<String>(availableDates, new PageRequest(0, 20), availableDates.size());
     }
     
     @Override
