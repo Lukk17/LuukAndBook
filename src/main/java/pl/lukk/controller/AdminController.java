@@ -50,6 +50,15 @@ public class AdminController
 
         return "views/admin/userList";
     }
+    
+    @GetMapping("/userList")
+    public String offerList(Model model, @SortDefault("id") Pageable pageable)
+    {
+
+        model.addAttribute("userList", userService.findAll(pageable));
+
+        return "views/admin/offerList";
+    }
 
     @GetMapping("/{id}/userEdit")
     public String edit(Model model, @PathVariable(name = "id") Long id)

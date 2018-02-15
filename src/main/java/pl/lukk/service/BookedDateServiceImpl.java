@@ -27,10 +27,10 @@ public class BookedDateServiceImpl implements BookedDateService
 
     @Autowired
     OfferRepository offerRepo;
-    
+
     @Autowired
     UserService userService;
-    
+
     private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @Override
@@ -53,7 +53,7 @@ public class BookedDateServiceImpl implements BookedDateService
         List<LocalDate> bookedDates = new ArrayList<>();
         List<LocalDate> availableDays = new ArrayList<>();
         List<String> availableDates = new ArrayList<>();
-        
+
         LocalDate now = LocalDate.now();
         LocalDate end = now.plusMonths(11);
         long days = now.until(end, ChronoUnit.DAYS);
@@ -67,10 +67,10 @@ public class BookedDateServiceImpl implements BookedDateService
         {
             availableDays.add(now.plusDays(i));
         }
-        
+
         if (!bookedDates.isEmpty())
         {
-            
+
             for (int i = 0; i < bookedDates.size(); i++)
             {
                 for (int j = 0; j < availableDays.size(); j++)
@@ -80,7 +80,7 @@ public class BookedDateServiceImpl implements BookedDateService
                         availableDays.remove(j);
                     }
                 }
-                
+
             }
         }
 
@@ -88,24 +88,27 @@ public class BookedDateServiceImpl implements BookedDateService
         {
             availableDates.add(t.format(FORMATTER));
         }
-        
+
         return new PageImpl<String>(availableDates, new PageRequest(0, 20), availableDates.size());
     }
-    
+
     @Override
     public void bookDates(List<String> datesToBookList, Long offerId, String userEmail)
     {
         Offer offer = offerRepo.findOne(offerId);
         User user = userService.findByUserEmail(userEmail);
-        
-        for(String s: datesToBookList)
+
+        if (datesToBookList != null)
         {
-            BookedDate newBooked = new BookedDate();
-            newBooked.setBookedDate(LocalDate.parse(s, FORMATTER));
-            newBooked.setOffer(offer);
-            newBooked.setUser(user);
-            bookedRepo.save(newBooked);
+            for (String s : datesToBookList)
+            {
+                BookedDate newBooked = new BookedDate();
+                newBooked.setBookedDate(LocalDate.parse(s, FORMATTER));
+                newBooked.setOffer(offer);
+                newBooked.setUser(user);
+                bookedRepo.save(newBooked);
+            }
         }
-        
+
     }
 }

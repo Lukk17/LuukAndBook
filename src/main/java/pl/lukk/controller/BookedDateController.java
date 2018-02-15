@@ -44,7 +44,7 @@ public class BookedDateController
     }
     
     @PostMapping("/offer/book")
-    public String datesList(@RequestParam("date") List<String> dateToBookList, @RequestParam("id") Long offerId, Authentication auth)
+    public String datesList(@RequestParam(value="date", required=false) List<String> dateToBookList, @RequestParam("id") Long offerId, Authentication auth)
     {
         bookedService.bookDates(dateToBookList, offerId, auth.getName());
         return "redirect:/offer/user/list";
