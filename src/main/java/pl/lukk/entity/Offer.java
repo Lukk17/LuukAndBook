@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "offer")
 public class Offer
 {
@@ -67,6 +69,7 @@ public class Offer
     private User user;
 
     @OneToMany(mappedBy="offer")
+    @JsonIgnore
     private List<BookedDate> bookedDates;
 
     public Long getId()

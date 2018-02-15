@@ -35,7 +35,7 @@ public class HomeController
     @GetMapping("/403")
     public String permissionError()
     {
-        return "404";
+        return "403";
     }
 
     @RequestMapping(value =

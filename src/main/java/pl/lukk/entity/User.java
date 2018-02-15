@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "users")
 public class User
 {
@@ -50,15 +52,19 @@ public class User
     private List<Role> roles;
 
     @OneToMany
+    @JsonIgnore
     private List<Offer> offers;
 
     @OneToMany
+    @JsonIgnore
     private List<Message> receivedMessage;
 
     @OneToMany
+    @JsonIgnore
     private List<Message> sentMessage;
 
     @OneToMany(mappedBy="user")
+    @JsonIgnore
     private List<BookedDate> bookedDates;
 
     public Long getId()

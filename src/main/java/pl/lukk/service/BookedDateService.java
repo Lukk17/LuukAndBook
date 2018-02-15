@@ -16,6 +16,6 @@ public interface BookedDateService
 
     void bookDates(List<String> datesToBookList, Long offerId, String userEmail);
 
-    Page<String> findAvailableDatesByOffersId(Long offerId);
+    Page<String> findAvailableDatesByOffersId(Long offerId, Integer page);
 
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.lukk.entity.Offer;
-import pl.lukk.entity.Role;
 import pl.lukk.entity.User;
 import pl.lukk.service.MessageService;
 import pl.lukk.service.OfferService;
@@ -39,7 +38,7 @@ public class AdminController
 
     @Autowired
     MessageService messageService;
-    
+
     @Autowired
     OfferService offerService;
 
@@ -51,7 +50,7 @@ public class AdminController
 
         return "views/admin/userList";
     }
-    
+
     @GetMapping("/offerList")
     public String offerList(Model model, @SortDefault("id") Pageable pageable)
     {
@@ -64,8 +63,6 @@ public class AdminController
     @GetMapping("/{id}/userEdit")
     public String edit(Model model, @PathVariable(name = "id") Long id)
     {
-        List<Role> roles = roleService.findAll();
-        model.addAttribute("roles", roles);
         model.addAttribute("user", userService.findByUserId(id));
 
         return "views/admin/userEdit";
@@ -113,7 +110,7 @@ public class AdminController
 
         return "views/admin/roleChange";
     }
-    
+
     @GetMapping("/offer/{id}/edit")
     public String offerEdit(Model model, @PathVariable(value = "id") Long id)
     {
@@ -131,7 +128,6 @@ public class AdminController
         }
         else
         {
-
             offerService.saveEditOffer(formOffer);
             return "redirect:/admin/offerList";
         }
@@ -156,5 +152,4 @@ public class AdminController
 
         }
     }
-
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pl.lukk.entity.BookedDate;
@@ -46,7 +45,7 @@ public class BookedDateServiceImpl implements BookedDateService
     }
 
     @Override
-    public Page<String> findAvailableDatesByOffersId(Long offerId)
+    public Page<String> findAvailableDatesByOffersId(Long offerId, Integer page)
     {
         List<BookedDate> bookedList = bookedRepo.findAllByOffer(offerRepo.findOne(offerId));
 
@@ -89,7 +88,19 @@ public class BookedDateServiceImpl implements BookedDateService
             availableDates.add(t.format(FORMATTER));
         }
 
-        return new PageImpl<String>(availableDates, new PageRequest(0, 20), availableDates.size());
+        if (page==null)
+        {
+            page=0;
+        }
+        int size = 20;
+        
+        int index = page * size;
+        if(index>availableDates.size())
+        {
+            index=availableDates.size();
+        }
+        return new PageImpl<String>(availableDates.subList(index,
+                index + size), new PageRequest(0, 20), availableDates.size());
     }
 
     @Override

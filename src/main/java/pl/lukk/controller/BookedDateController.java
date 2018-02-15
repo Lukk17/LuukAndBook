@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.lukk.entity.User;
@@ -40,10 +41,16 @@ public class BookedDateController
     OfferService offerService;
     
     @GetMapping("/{id}/dates")
-    public String datesList(@PathVariable(value = "id") Long offerId , Model model)
-    {
+    public String datesList(@PathVariable(value = "id") Long offerId , Model model, @RequestParam(value="page", required=false) Integer page)
+    {   Integer pages = bookedService.findAvailableDatesByOffersId(offerId, page).getTotalPages();
+        List<Integer> listPages = new ArrayList<>();
+        for (int i = 0; i < pages-1; i++)
+        {
+            listPages.add(i);
+        }
+        model.addAttribute("pages", listPages);
         model.addAttribute("id", offerId);
-        model.addAttribute("availableDates", bookedService.findAvailableDatesByOffersId(offerId));
+        model.addAttribute("availableDates", bookedService.findAvailableDatesByOffersId(offerId, page));
         return "views/offer/dates";
     }
     
