@@ -66,7 +66,7 @@
 			<!--  HELLO form start -->
 
 			 
-			<a href="index.html" class="logo" style="margin-left: 15%; width: 40%; "> 
+			<a th:href="@{/}" class="logo" style="margin-left: 15%; width: 40%; "> 
 			<span sec:authorize="hasRole('ROLE_USER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span> 
 			<span sec:authorize="hasRole('ROLE_MANAGER')" th:text="|${logedUser.name}!|" Style="color:red; margin-right:4%"> </span> 
 			<span class="lite">Began adventure of a </span> lifetime!
