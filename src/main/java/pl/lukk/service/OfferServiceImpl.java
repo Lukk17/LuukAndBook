@@ -109,11 +109,6 @@ public class OfferServiceImpl implements OfferService
             databaseOffer.setDescription(offer.getDescription());
         }
 
-        //        if (offer.getComment() != null)
-        //        {
-        //            databaseOffer.setComment(offer.getComment());
-        //        }
-
         if (offer.getCountry() != null)
         {
             databaseOffer.setCountry(offer.getCountry());
@@ -123,11 +118,6 @@ public class OfferServiceImpl implements OfferService
         {
             databaseOffer.setCity(offer.getCity());
         }
-
-        //        if (offer.getUser() != null)
-        //        {
-        //            databaseOffer.setUser(offer.getUser());
-        //        }
 
         databaseOffer.setPromoted(offer.isPromoted());
 

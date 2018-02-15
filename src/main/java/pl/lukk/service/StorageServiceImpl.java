@@ -138,11 +138,4 @@ public class StorageServiceImpl implements StorageService
         }
     }
 
-    @Override
-    public void deleteAll()
-    {
-        // TODO Auto-generated method stub
-
-    }
-
 }
