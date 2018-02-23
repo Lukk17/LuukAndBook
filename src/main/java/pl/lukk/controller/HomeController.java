@@ -1,7 +1,5 @@
 package pl.lukk.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
@@ -60,7 +58,7 @@ public class HomeController
     { "/", "/index" })
     public String home(Model model, @SortDefault("hotelName") Pageable pageable, Authentication auth)
     {
-        if (auth!=null)
+        if (auth != null)
         {
             logedSubscriverEmail = auth.getName();
         }

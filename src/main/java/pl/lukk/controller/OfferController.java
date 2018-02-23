@@ -93,7 +93,7 @@ public class OfferController
     {
         offerService.deleteOffer(offerId, auth.getName());
 
-        return "redirect:offer/owner/list";
+        return "redirect:/offer/owner/list";
     }
 
     @GetMapping("/owner/list")

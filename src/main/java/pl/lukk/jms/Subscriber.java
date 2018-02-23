@@ -37,17 +37,17 @@ public class Subscriber
         connection.start();
     }
 
-    public String getName(int timeout) throws JMSException
+    public String getMessage(int timeout) throws JMSException
     {
-        String receivedName = "no message was sent";
+        String receivedMessage = "no message was sent";
         Message message = messageConsumer.receive(timeout);
         if (message != null)
         {
             TextMessage textMessage = (TextMessage) message;
             String text = textMessage.getText();
-            receivedName = text;
+            receivedMessage = text;
         }
-        return receivedName;
+        return receivedMessage;
     }
 
 }

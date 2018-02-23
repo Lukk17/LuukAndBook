@@ -13,7 +13,6 @@ import pl.lukk.service.SpringDataUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableScheduling
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Bean
@@ -49,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         .failureUrl("/login?error=true")                            //  adress for error login
     
         .and().exceptionHandling().accessDeniedPage("/403")         // when user have no authorization on page
-        .and().logout().logoutUrl("/index")
+        .and().logout().logoutSuccessUrl("/")
         .permitAll();
     }
     

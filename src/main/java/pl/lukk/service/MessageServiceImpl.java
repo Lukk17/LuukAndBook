@@ -127,14 +127,40 @@ public class MessageServiceImpl implements MessageService
 
     @Override
     public void publish(String message, String adminEmail) throws JMSException
-    {
+    {       
         User admin = userRepo.findByEmail(adminEmail);
         Publisher publisher = new Publisher();
         publisher.create(admin.getEmail(), "adminMessage");
-//        publisher.publish(message);
         
-        jmsTemplate.convertAndSend( message );
-        publisher.closeConnection();
+        List<User> subscribers = userRepo.findAll();
+        
+        for (User u : subscribers)
+        {
+            Subscriber subscriber = new Subscriber();
+            subscriber.create(u.getEmail(), "adminMessage");
+        }
+        
+        jmsTemplate.convertAndSend( "wiadomosc od admina" );
+        
+        for (User u : subscribers)
+        {
+            Subscriber subscriber = new Subscriber();
+            subscriber.create(u.getEmail(), "adminMessage");
+            String topicMessage = subscriber.getMessage(5000);
+
+            Message msgToSave = new Message();
+
+            msgToSave.setReceiver(u);
+            msgToSave.setSender(userRepo.findById(1L));
+            msgToSave.setText(topicMessage);
+            msgToSave.setReaded(false);
+            msgToSave.setPermaReceiver(u);
+            msgToSave.setPermaSender(userRepo.findById(1L));
+            messageRepo.save(msgToSave);
+            
+//            subscriber.closeConnection();
+        }
+//        publisher.closeConnection();
 
     }
 
@@ -146,7 +172,7 @@ public class MessageServiceImpl implements MessageService
             User user = userRepo.findByEmail(userEmail);
             Subscriber subscriber = new Subscriber();
             subscriber.create(user.getEmail(), "adminMessage");
-            String topicMessage = subscriber.getName(5000);
+            String topicMessage = subscriber.getMessage(5000);
 
             Message msgToSave = new Message();
 
