@@ -12,7 +12,15 @@ You need Maven installed in your IDE, or installed on your OS with TomCat server
 
 ### Installing
 
-Run on server in your IDE or install by Maven and run on TomCat server
+Use mysqldump files to create DB. It have all necessary entries and some additional to show functionality from start.  
+Program need to have "roles" specify in "role" table before it can start and preferably admin account - rest is unimportant and can be deleted.
+Run as Spring Boot Application or install by Maven and run on TomCat server.
+
+
+### Login for admin account:
+
+login: admin@mail.com
+pass: admin
 
 
 ## Built With
@@ -35,17 +43,15 @@ Every offer can be edited. Promote offer can only admin.
 
 ## In future
 
-  * Frontend clear,
   * login by facebook, google etc.
   * password reset,
-  * searching by date,
-  * JMS system repair,
-  * offer export to CSV file,
+  * searching offers by availability date,
+  * owner's offers export to CSV file,
   * confirmation by email,
-  * invoice and price negotation
+  * invoice and price negotiations
   * RestControllers.
 
 
-## Authors
+## Author
 
   **Lukk Sarna**  - [Lukk17](https://github.com/Lukk17)
