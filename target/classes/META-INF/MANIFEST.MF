@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Implementation-Title: SpringBootTemplate
+Implementation-Title: LukkAndBook
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: lukk
 Implementation-Vendor-Id: pl.lukk
 Build-Jdk: 1.8.0_161
-Implementation-URL: http://projects.spring.io/spring-boot/template/
+Implementation-URL: http://projects.spring.io/spring-boot/LukkAndBook/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 

@@ -95,8 +95,4 @@ public interface MessageService
      */
     Integer unreadedNum(String receiverEmail);
 
-    void publish(String message, String adminEmail) throws JMSException;
-
-    void getTopicMessage(String userEmail) throws JMSException;
-
 }

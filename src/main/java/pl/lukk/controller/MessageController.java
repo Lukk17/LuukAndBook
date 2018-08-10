@@ -96,31 +96,6 @@ public class MessageController
         return "views/message/senderDetails";
     }
     
-    @GetMapping("/admin/publish")
-    public String publish(Model model)
-    {
-        Message msg = new Message();
-        model.addAttribute("msg", msg);
-
-        return "views/message/publish";
-    }
-    
-    @PostMapping("/admin/publish")
-    public String publish(Message message, Authentication auth)
-    {
-        try
-        {
-            messageService.publish(message.getText(), auth.getName());
-        }
-        catch (JMSException e)
-        {
-            
-            return "redirect:/500";
-        }
-        
-        return "redirect:/message/inbox";
-    }
-
     @ModelAttribute
     public void addAttributes(Model model, Authentication auth)
     {

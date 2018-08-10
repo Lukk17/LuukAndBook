@@ -14,12 +14,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import pl.lukk.SpringBootTemplateApplication;
+import pl.lukk.Application;
 import pl.lukk.entity.Role;
 import pl.lukk.entity.User;
 
 @SpringBootTest(classes =
-{ SpringBootTemplateApplication.class })
+{ Application.class })
 @RunWith(SpringRunner.class)
 //@SqlGroup(
 //{ @Sql(scripts = "/clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD) })

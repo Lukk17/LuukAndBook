@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import pl.lukk.entity.Message;
 import pl.lukk.entity.User;
-import pl.lukk.jms.Publisher;
-import pl.lukk.jms.Subscriber;
 import pl.lukk.repository.MessageRepository;
 import pl.lukk.repository.UserRepository;
 
@@ -124,68 +122,4 @@ public class MessageServiceImpl implements MessageService
     {
         return messageRepo.findAllBySenderEmail(email, pageable);
     }
-
-    @Override
-    public void publish(String message, String adminEmail) throws JMSException
-    {       
-        User admin = userRepo.findByEmail(adminEmail);
-        Publisher publisher = new Publisher();
-        publisher.create(admin.getEmail(), "adminMessage");
-        
-        List<User> subscribers = userRepo.findAll();
-        
-        for (User u : subscribers)
-        {
-            Subscriber subscriber = new Subscriber();
-            subscriber.create(u.getEmail(), "adminMessage");
-        }
-        
-        jmsTemplate.convertAndSend( "wiadomosc od admina" );
-        
-        for (User u : subscribers)
-        {
-            Subscriber subscriber = new Subscriber();
-            subscriber.create(u.getEmail(), "adminMessage");
-            String topicMessage = subscriber.getMessage(5000);
-
-            Message msgToSave = new Message();
-
-            msgToSave.setReceiver(u);
-            msgToSave.setSender(userRepo.findById(1L));
-            msgToSave.setText(topicMessage);
-            msgToSave.setReaded(false);
-            msgToSave.setPermaReceiver(u);
-            msgToSave.setPermaSender(userRepo.findById(1L));
-            messageRepo.save(msgToSave);
-            
-//            subscriber.closeConnection();
-        }
-//        publisher.closeConnection();
-
-    }
-
-    @Override
-    public void getTopicMessage(String userEmail) throws JMSException
-    {
-        if (userEmail != null)
-        {
-            User user = userRepo.findByEmail(userEmail);
-            Subscriber subscriber = new Subscriber();
-            subscriber.create(user.getEmail(), "adminMessage");
-            String topicMessage = subscriber.getMessage(5000);
-
-            Message msgToSave = new Message();
-
-            msgToSave.setReceiver(user);
-            msgToSave.setSender(userRepo.findById(1L));
-            msgToSave.setText(topicMessage);
-            msgToSave.setReaded(false);
-            msgToSave.setPermaReceiver(user);
-            msgToSave.setPermaSender(userRepo.findById(1L));
-            messageRepo.save(msgToSave);
-            subscriber.closeConnection();
-        }
-
-    }
-
 }

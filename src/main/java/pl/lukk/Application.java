@@ -10,12 +10,12 @@ import pl.lukk.service.StorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
-public class SpringBootTemplateApplication
+public class Application
 {
 
     public static void main(String[] args)
     {
-        SpringApplication.run(SpringBootTemplateApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Bean
