@@ -16,6 +16,11 @@ Use mysqldump files to create DB. It have all necessary entries and some additio
 Program need to have "roles" specify in "role" table before it can start and preferably admin account - rest is unimportant and can be deleted.
 Run as Spring Boot Application or install by Maven and run on TomCat server.
 
+### Lunching
+
+type this address in web browser:
+http://localhost:5555/
+as it is running on port 5555
 
 ### Login for admin account:
 
