@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
+		<version>2.1.8.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -28,10 +28,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-actuator-docs</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,16 +73,17 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			<version>3.0.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>io.github.jpenren</groupId>
 			<artifactId>thymeleaf-spring-data-dialect</artifactId>
-			<version>2.1.1</version>
+			<version>3.4.1</version>
 		</dependency>
 		 <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
+            <version>1.18.8</version>
             <scope>provided</scope>
         </dependency>
 		 <dependency>
@@ -101,7 +98,7 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		 <dependency>
+		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 			<version>5.15.2</version>

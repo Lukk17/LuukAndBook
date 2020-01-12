@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService
     public User findByUserId(Long id)
     {
 
-        return userRepository.findById(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -146,14 +146,14 @@ public class UserServiceImpl implements UserService
     @Override
     public void roleChange(Long userId, List<Long> rolesId)
     {
-        User databaseUser = userRepository.findOne(userId);
+        User databaseUser = userRepository.findById(userId).orElse(null);
         List<Role> roles = new ArrayList<>();
 
         for (int i = 0; i < rolesId.size(); i++)
         {
             if (rolesId.get(i) != null)
             {
-                roles.add(roleRepository.findOne(rolesId.get(i)));
+                roles.add(roleRepository.findById(rolesId.get(i)).orElse(null));
             }
         }
         databaseUser.setRoles(roles);
@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService
     public void delete(Long id)
     {
 
-        userRepository.delete(userRepository.findById(id));
+        userRepository.delete(userRepository.findById(id).orElse(null));
     }
 
     @Override

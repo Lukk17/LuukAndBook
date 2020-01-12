@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public SpringDataUserDetailsService customUserDetailsService() {
     return new SpringDataUserDetailsService();
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {

@@ -72,7 +72,8 @@ public class OfferServiceImpl implements OfferService
     @Override
     public void saveEditOffer(Offer offer)
     {
-        Offer databaseOffer = offerRepo.findOne(offer.getId());
+
+        Offer databaseOffer = offerRepo.findById(offer.getId()).orElse(null);
 
         if (offer.getId() != null)
         {
@@ -195,13 +196,13 @@ public class OfferServiceImpl implements OfferService
     @Override
     public Offer adminFindOfferById(Long id)
     {
-        return offerRepo.findOne(id);
+        return offerRepo.findById(id).orElse(null);
     }
 
     @Override
     public Offer findOneById(Long id)
     {
-        return offerRepo.findOne(id);
+        return offerRepo.findById(id).orElse(null);
     }
     
     @Override

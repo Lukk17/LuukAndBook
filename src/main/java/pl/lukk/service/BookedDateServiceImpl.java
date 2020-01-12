@@ -41,13 +41,13 @@ public class BookedDateServiceImpl implements BookedDateService
     @Override
     public List<BookedDate> findAllBookedDatesByOffer(Long offerId)
     {
-        return bookedRepo.findAllByOffer(offerRepo.findOne(offerId));
+        return bookedRepo.findAllByOffer(offerRepo.findById(offerId).orElse(null));
     }
 
     @Override
     public Page<String> findAvailableDatesByOffersId(Long offerId, Integer page)
     {
-        List<BookedDate> bookedList = bookedRepo.findAllByOffer(offerRepo.findOne(offerId));
+        List<BookedDate> bookedList = bookedRepo.findAllByOffer(offerRepo.findById(offerId).orElse(null));
 
         List<LocalDate> bookedDates = new ArrayList<>();
         List<LocalDate> availableDays = new ArrayList<>();
@@ -106,7 +106,7 @@ public class BookedDateServiceImpl implements BookedDateService
     @Override
     public void bookDates(List<String> datesToBookList, Long offerId, String userEmail)
     {
-        Offer offer = offerRepo.findOne(offerId);
+        Offer offer = offerRepo.findById(offerId).orElse(null);
         User user = userService.findByUserEmail(userEmail);
 
         if (datesToBookList != null)

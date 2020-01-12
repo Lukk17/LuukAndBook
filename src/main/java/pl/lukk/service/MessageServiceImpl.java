@@ -43,7 +43,7 @@ public class MessageServiceImpl implements MessageService
     @Override
     public Message findOneById(String email, Long messageId)
     {
-        Message msg = messageRepo.findOne(messageId);
+        Message msg = messageRepo.findById(messageId).orElse(null);
         if (msg.getPermaReceiver().equals(userRepo.findByEmail(email)) || msg.getPermaSender().equals(
                 userRepo.findByEmail(email)))
         {
@@ -59,7 +59,7 @@ public class MessageServiceImpl implements MessageService
     public void send(Message message, String senderEmail, Long receiverId)
     {
         //  entries which users can delete from mailbox:
-        message.setReceiver(userRepo.findById(receiverId));
+        message.setReceiver(userRepo.findById(receiverId).orElse(null));
         message.setSender(userRepo.findByEmail(senderEmail));
         //  undeletable entries:
         message.setPermaReceiver(message.getReceiver());
@@ -73,7 +73,7 @@ public class MessageServiceImpl implements MessageService
     @Override
     public void readed(Long messageId, String receiverEmail)
     {
-        Message message = messageRepo.findOne(messageId);
+        Message message = messageRepo.findById(messageId).orElse(null);
 
         if (receiverEmail.equals(message.getReceiver().getEmail()))
         {
@@ -96,7 +96,7 @@ public class MessageServiceImpl implements MessageService
     @Override
     public void remove(Long messageId, String userEmail)
     {
-        Message message = messageRepo.findOne(messageId);
+        Message message = messageRepo.findById(messageId).orElse(null);
         //  if user is sender, then set sender as null (delete from outbox)
         if (message.getSender().getEmail().equals(userEmail))
         {

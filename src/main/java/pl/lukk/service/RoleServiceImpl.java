@@ -3,6 +3,7 @@ package pl.lukk.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import pl.lukk.entity.Role;
@@ -29,12 +30,12 @@ public class RoleServiceImpl implements RoleService
     @Override
     public Role findOneById(Long id)
     {
-        return roleRepository.findOne(id);
+        return roleRepository.findById(id).orElse(null);
     }
 
     @Override
     public void removeRole(Long id)
     {
-        roleRepository.delete(id);
+        roleRepository.delete(roleRepository.findById(id).orElse(null));
     }
 }

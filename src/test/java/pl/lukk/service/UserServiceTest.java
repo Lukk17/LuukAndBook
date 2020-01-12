@@ -79,7 +79,7 @@ public class UserServiceTest
         Long id = 1L;
         user.setId(id);
         
-        when(userRepo.findById(id)).thenReturn(user);
+        when(userRepo.findById(id)).thenReturn(java.util.Optional.of(user));
         //when
         User result = userService.findByUserId(id);
         //then
